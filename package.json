@@ -4,9 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "npm run init-db && nodemon server.js",
-    "sequelize-skeleton": "sequelize-cli/lib/sequelize init:models; sequelize-cli/lib/sequelize init:config",
-    "init-db": "cd DIR_WHERE_MYSQL_BIN_IS && echo 'DROP DATABASE IF EXISTS api; CREATE DATABASE api CHARACTER SET utf8 COLLATE utf8_general_ci' | ./mysql -u root && cd -"
+    "start": "nodemon server.js",
+    "lint": "eslint --fix . --ext .js"
   },
   "keywords": [],
   "author": "",
