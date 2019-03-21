@@ -12,7 +12,6 @@ const sequelize = new Sequelize("cleaning-services", "root", "8732586", {
 });
 
 db.sequelize = sequelize;
-db.Sequelize = Sequelize;
 
 sequelize.authenticate()
 .then(()=> console.log('Database connected'))
