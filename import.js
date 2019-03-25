@@ -1,3 +1,4 @@
+// todo лучше положить файлик в отдельнйю папку scripts, чтобы было понятно что это вспомогательный файл, а не код приложения
 const fs = require("fs");
 const path = require("path");
 const db = require("./database/db");
@@ -13,6 +14,7 @@ function insertRecordsIntoTable(TABLE_NAME, records) {
   });
 }
 
+// todo часто проще не изобретать велосипеды ;-) https://www.npmjs.com/package/minimist
 process.argv.forEach(element => {
   let line = element.split("=");
   if (line[0] && line[0].trim() == "--table") {
@@ -37,12 +39,14 @@ fs.readFile(DATA, (err, data) => {
     .then(data => {
       if (data[0][0].count == 0) {
         db.sequelize
+        // в такой реализации все поля у тебя строки, возможно проще использовать sequilize https://sequelize.readthedocs.io/en/latest/api/sequelize/#sync
           .query(
             `CREATE TABLE ${TABLE_NAME} (${columns.join(
               " VARCHAR(300), "
             )} VARCHAR(300));`
           )
           .then(() => {
+            // для инсерта тоже будет проще через модель инсерт делать
             insertRecordsIntoTable(TABLE_NAME, records);
           });
       } else {
