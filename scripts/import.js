@@ -20,13 +20,10 @@ const DATA = path.join(__dirname, `../data/${FILE_NAME}`);
 fs.readFile(DATA, async (error, data) => {
   try {
     const records = JSON.parse(data);
-    await eval(TABLE_NAME)
-      .sync({})
-      .then(() => {
-        eval(TABLE_NAME).bulkCreate(records, {
-          ignoreDuplicates: true
-        });
-      });
+    await eval(TABLE_NAME).sync({});
+    await eval(TABLE_NAME).bulkCreate(records, {
+      ignoreDuplicates: true
+    });
   } catch (err) {
     console.log(`Error: ${err}`);
   }
