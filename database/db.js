@@ -3,7 +3,7 @@ const Sequelize = require("sequelize");
 
 const db = {};
 const sequelize = new Sequelize(
-  "cleaning-services",
+  process.env.DB_NAME,
   process.env.DB_USER,
   process.env.DB_PASS,
   {
