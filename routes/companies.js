@@ -1,13 +1,16 @@
+/* eslint-disable no-console */
 const express = require("express");
+
 const router = express.Router();
-const db = require('../database/db');
 const Company = require("../models/company");
 
-router.get("/companies", (req, res) => {
-  Company.findAll().then(companies => {
+router.get("/companies", async (req, res) => {
+  try {
+    const companies = await Company.findAll();
     res.json(companies);
-  })
-  .catch(err => console.log("Error: " + err));
+  } catch (err) {
+    console.log(`Error: ${err}`);
+  }
 });
 
 module.exports = router;

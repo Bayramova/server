@@ -15,7 +15,7 @@ module.exports = db.sequelize.define(
       type: Sequelize.STRING
     },
     description: {
-      type: Sequelize.STRING
+      type: Sequelize.TEXT
     }
   },
   {
