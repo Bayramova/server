@@ -16,7 +16,7 @@ router.post("/signup", (req, res) => {
     }
   }).then(user => {
     if (user) {
-      return res.json({ message: "Email already exists" });
+      return res.status(400).json({ email: "Email already exists" });
     }
     const newUser = {
       email: req.body.email,
@@ -45,7 +45,7 @@ router.post("/signin", (req, res) => {
     }
   }).then(user => {
     if (!user) {
-      return res.json({ message: "User not found" });
+      return res.status(400).json({ emailincorrect: "User not found" });
     }
 
     bcrypt.compare(req.body.password, user.password).then(isMatch => {
@@ -69,7 +69,9 @@ router.post("/signin", (req, res) => {
           }
         );
       } else {
-        return res.json({ message: "Incorrect password." });
+        return res
+          .status(400)
+          .json({ passwordincorrect: "Incorrect password." });
       }
     });
   });
