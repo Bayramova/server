@@ -6,40 +6,44 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const db = require("../config/database");
 const User = require("../models/user");
 const jwtSecret = require("../config/keys");
 
-router.post("/register", (req, res) => {
-  User.findOne({ email: req.body.email }).then(user => {
+router.post("/signup", (req, res) => {
+  User.findOne({
+    where: {
+      email: req.body.email
+    }
+  }).then(user => {
     if (user) {
       return res.json({ message: "Email already exists" });
     }
+    const newUser = {
+      email: req.body.email,
+      password: req.body.password,
+      role: req.body.role
+    };
 
-    db.sequelize.sync().then(() => {
-      const newUser = {
-        email: req.body.email,
-        password: req.body.password,
-        role: req.body.role
-      };
-
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) throw err;
-          newUser.password = hash;
-          return User.create(newUser)
-            .then(user => {
-              res.json(user);
-            })
-            .catch(err => console.log(err));
-        });
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(newUser.password, salt, (err, hash) => {
+        if (err) throw err;
+        newUser.password = hash;
+        return User.create(newUser)
+          .then(user => {
+            res.json(user);
+          })
+          .catch(err => console.log(err));
       });
     });
   });
 });
 
-router.post("/login", (req, res) => {
-  User.findOne({ email: req.body.email }).then(user => {
+router.post("/signin", (req, res) => {
+  User.findOne({
+    where: {
+      email: req.body.email
+    }
+  }).then(user => {
     if (!user) {
       return res.json({ message: "User not found" });
     }
