@@ -8,6 +8,7 @@ const fs = require("fs");
 const path = require("path");
 const companies = require("../models/company");
 const services = require("../models/service");
+const users = require("../models/user");
 
 let TABLE_NAME = "";
 let FILE_NAME = "";
