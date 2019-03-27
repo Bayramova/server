@@ -1,39 +1,44 @@
+"use strict";
+
 const Sequelize = require("sequelize");
-const db = require('../database/db');
+const db = require("../database/db");
 
 module.exports = db.sequelize.define(
-  'company',
+  "company",
   {
     id: {
       type: Sequelize.STRING,
       primaryKey: true
     },
     logo: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING
     },
     name: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING
     },
     address: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING
     },
     rating: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING
     },
     orders: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING
     },
-    services:  {
-       type: Sequelize.STRING,
+    services: {
+      type: Sequelize.STRING,
       get() {
-        return this.getDataValue('services').split(',')
+        return this.getDataValue("services").split(",");
       },
       set(val) {
-        this.setDataValue('services', val.join(','));
+        this.setDataValue("services", val.join(","));
       }
     },
     reviewsNumber: {
-      type: Sequelize.STRING,
-    },
+      type: Sequelize.STRING
+    }
   },
-)
+  {
+    timestamps: false
+  }
+);

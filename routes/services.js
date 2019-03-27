@@ -1,13 +1,17 @@
+"use strict";
+
 const express = require("express");
+
 const router = express.Router();
-const db = require('../database/db');
 const Service = require("../models/service");
 
-router.get("/services", (req, res) => {
-  Service.findAll().then(services => {
+router.get("/services", async (req, res) => {
+  try {
+    const services = await Service.findAll();
     res.json(services);
-  })
-  .catch(err => console.log("Error: " + err));
+  } catch (err) {
+    console.log(`Error: ${err}`);
+  }
 });
 
 module.exports = router;

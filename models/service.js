@@ -1,21 +1,26 @@
+"use strict";
+
 const Sequelize = require("sequelize");
-const db = require('../database/db');
+const db = require("../database/db");
 
 module.exports = db.sequelize.define(
-  'service',
+  "service",
   {
     id: {
       type: Sequelize.STRING,
       primaryKey: true
     },
     image: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING
     },
     title: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING
     },
     description: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT
     }
   },
-)
+  {
+    timestamps: false
+  }
+);
