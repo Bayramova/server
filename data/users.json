@@ -1,5 +1,7 @@
 [{
   "email": "vasyapupkin@gmail.com",
   "password": "$2y$10$1tcuKaFrsQegUtQrwLhFc.01qo8BXT/S/SBIyEhXVszUj/2FEbW/S",
-  "role": "client"
+  "role": "client",
+  "name": "Vasya Pupkin",
+  "address": "ul. Tolstogo 10, Minsk"
 }]

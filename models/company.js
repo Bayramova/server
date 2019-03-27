@@ -1,3 +1,5 @@
+"use strict";
+
 const Sequelize = require("sequelize");
 const db = require("../config/database");
 
@@ -7,6 +9,11 @@ module.exports = db.sequelize.define(
     id: {
       type: Sequelize.STRING,
       primaryKey: true
+    },
+    email: {
+      type: Sequelize.STRING,
+      unique: true,
+      allowNull: false
     },
     logo: {
       type: Sequelize.STRING
