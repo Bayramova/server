@@ -1,4 +1,5 @@
-/* eslint-disable no-console */
+"use strict";
+
 /* eslint-disable no-eval */
 /* eslint-disable no-unused-vars */
 
