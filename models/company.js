@@ -1,22 +1,33 @@
 "use strict";
 
 const Sequelize = require("sequelize");
+// const uuid = require("uuid/v4");
 const db = require("../config/database");
 
-module.exports = db.sequelize.define(
+const Company = db.sequelize.define(
   "company",
   {
     id: {
+      autoIncrement: true,
+      primaryKey: true,
+      type: Sequelize.INTEGER
+    },
+    role: {
       type: Sequelize.STRING,
-      primaryKey: true
+      defaultValue: "company"
     },
     email: {
       type: Sequelize.STRING,
       unique: true,
       allowNull: false
     },
+    password: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
     logo: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      defaultValue: "./img/logo/dice-two-solid.svg"
     },
     name: {
       type: Sequelize.STRING
@@ -47,3 +58,5 @@ module.exports = db.sequelize.define(
     timestamps: false
   }
 );
+
+module.exports = Company;

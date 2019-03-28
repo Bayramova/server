@@ -3,7 +3,7 @@
 const JwtStrategy = require("passport-jwt").Strategy;
 const { ExtractJwt } = require("passport-jwt");
 const jwtSecret = require("./keys");
-const User = require("../models/user");
+const Client = require("../models/client");
 // const LocalStrategy = require("passport-local").Strategy;
 
 const jwtOptions = {
@@ -16,7 +16,7 @@ module.exports = passport => {
     "jwt",
     new JwtStrategy(jwtOptions, (payload, done) => {
       try {
-        User.findById(payload.id).then(user => {
+        Client.findById(payload.id).then(user => {
           if (user) {
             console.log("User found in database.");
             done(null, user);

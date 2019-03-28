@@ -1,7 +1,6 @@
 "use strict";
 
 const express = require("express");
-const session = require("express-session");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
@@ -17,8 +16,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(morgan("dev"));
-
-app.use(session({ secret: "secret", resave: true, saveUninitialized: true }));
 
 app.use(passport.initialize());
 require("./config/passport")(passport);

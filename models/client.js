@@ -3,11 +3,16 @@
 const Sequelize = require("sequelize");
 const db = require("../config/database");
 
-const User = db.sequelize.define(
-  "user",
+const Client = db.sequelize.define(
+  "client",
   {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     role: {
-      type: Sequelize.ENUM("client", "company", "admin"),
+      type: Sequelize.STRING,
       defaultValue: "client"
     },
     email: {
@@ -18,6 +23,12 @@ const User = db.sequelize.define(
     password: {
       type: Sequelize.STRING,
       allowNull: false
+    },
+    name: {
+      type: Sequelize.STRING
+    },
+    address: {
+      type: Sequelize.STRING
     }
   },
   {
@@ -25,6 +36,4 @@ const User = db.sequelize.define(
   }
 );
 
-User.sync();
-
-module.exports = User;
+module.exports = Client;
