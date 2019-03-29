@@ -9,7 +9,6 @@ const path = require("path");
 const db = require("../config/database");
 const companies = require("../models/company");
 const services = require("../models/service");
-const clients = require("../models/client");
 
 let TABLE_NAME = "";
 let FILE_NAME = "";
@@ -31,13 +30,3 @@ fs.readFile(DATA, async (error, data) => {
     console.log(`Error: ${err}`);
   }
 });
-
-// db.sequelize
-//   .query(
-//     `CREATE TABLE IF NOT EXISTS users AS SELECT email, password, role FROM companies`
-//   )
-//   .then(data => {
-//     db.sequelize.query(
-//       `INSERT INTO users SELECT email, password, role FROM clients`
-//     );
-//   });

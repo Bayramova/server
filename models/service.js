@@ -3,7 +3,7 @@
 const Sequelize = require("sequelize");
 const db = require("../config/database");
 
-module.exports = db.sequelize.define(
+const Service = db.sequelize.define(
   "service",
   {
     id: {
@@ -24,3 +24,5 @@ module.exports = db.sequelize.define(
     timestamps: false
   }
 );
+
+module.exports = Service;
