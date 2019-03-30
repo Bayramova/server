@@ -23,31 +23,12 @@ const User = db.sequelize.define("user", {
   password: {
     type: Sequelize.STRING,
     allowNull: false
-  },
-  name: {
-    type: Sequelize.STRING
-  },
-  address: {
-    type: Sequelize.STRING
-  },
-  companyId: {
-    type: Sequelize.INTEGER,
-    allowNull: true
   }
 });
-
-User.associate = function(models) {
-  User.belongsTo(models.Company, {
-    foreignKey: "companyId",
-    as: "company"
-  });
-};
 
 // User.belongsTo(Company, {
 //   foreignKey: "companyId",
 //   as: "company"
 // });
-
-// User.associate(db.sequelize.models);
 
 module.exports = User;

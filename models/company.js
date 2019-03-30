@@ -1,15 +1,16 @@
 "use strict";
 
 const Sequelize = require("sequelize");
+const uuid = require("uuid/v4");
 const db = require("../config/database");
-const User = require("../models/user");
+// const User = require("../models/user");
 
 const Company = db.sequelize.define("company", {
   id: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.UUID,
     allowNull: false,
     primaryKey: true,
-    autoIncrement: true
+    defaultValue: uuid()
   },
   role: {
     type: Sequelize.STRING,
@@ -54,10 +55,10 @@ const Company = db.sequelize.define("company", {
   }
 });
 
-Company.hasMany(User, {
-  as: "employees",
-  foreignKey: "companyId",
-  sourceKey: "id"
-});
+// Company.hasMany(User, {
+//   as: "employees",
+//   foreignKey: "companyId",
+//   sourceKey: "id"
+// });
 
 module.exports = Company;
