@@ -1,9 +1,6 @@
 [
   {
     "id": "8deb978f-caea-4971-ba87-c9501588d8ac",
-    "role": "company",
-    "email": "qwerty@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/atom-solid.svg",
     "name": "Fresh Perspectives",
     "address": "1600 Pennsylvania Avenue, Washington",
@@ -14,9 +11,6 @@
   },
   {
     "id": "c61fca34-d0aa-4222-8da1-ce8fa39acd46",
-    "role": "company",
-    "email": "werty@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/bath-solid.svg",
     "name": "Uborka Kvartir",
     "address": "11 Wall Street New York, NY",
@@ -27,9 +21,6 @@
   },
   {
     "id": "e745690a-591d-4eb1-9b15-bf869177ef34",
-    "role": "company",
-    "email": "erty@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/candy-cane-solid.svg",
     "name": "Sparkling Palaces",
     "address": "350 Fifth Avenue New York, NY",
@@ -40,9 +31,6 @@
   },
   {
     "id": "7c278891-addc-4b3c-a21d-dd4318f063dc",
-    "role": "company",
-    "email": "rty@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/cat-solid.svg",
     "name": "House Cleaners",
     "address": "221 B Baker St, London",
@@ -58,9 +46,6 @@
   },
   {
     "id": "560aafcb-415e-4fab-8b63-9ad39c54ed89",
-    "role": "company",
-    "email": "ty@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/frog-solid.svg",
     "name": "Roga&Kopyta",
     "address": "Tour Eiffel Champ de Mars, Paris",
@@ -80,9 +65,6 @@
   },
   {
     "id": "820fd1fc-e2c3-43df-9318-a3ea73ce81e7",
-    "role": "company",
-    "email": "y@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/ghost-solid.svg",
     "name": "Cowboys Cleaning",
     "address": "4059 Mt Lee Dr. Hollywood, CA",
@@ -93,9 +75,6 @@
   },
   {
     "id": "7e3e8449-45ad-4761-b797-41b737d30364",
-    "role": "company",
-    "email": "qwert@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/hamburger-solid.svg",
     "name": "RamClean Cleaning Services",
     "address": "Buckingham Palace, London",
@@ -106,9 +85,6 @@
   },
   {
     "id": "a94b544e-4932-463e-b51e-f98a0adff7c4",
-    "role": "company",
-    "email": "qwer@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/hippo-solid.svg",
     "name": "Stormy's Cleaning Service",
     "address": "Statue of Liberty, Liberty Island New York, NY",
@@ -124,9 +100,6 @@
   },
   {
     "id": "d97b18ce-1b55-421d-bd54-cdfdea2e4c97",
-    "role": "company",
-    "email": "qwe@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/horse-solid.svg",
     "name": "A&A Cleaning Services",
     "address": "Manager Square, Bethlehem, West Bank",
@@ -137,9 +110,6 @@
   },
   {
     "id": "e0a59923-49df-4625-a5f3-c072e611aefb",
-    "role": "company",
-    "email": "qw@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/home-solid.svg",
     "name": "GoClean",
     "address": "2 Macquarie Street, Sydney",
@@ -150,9 +120,6 @@
   },
   {
     "id": "f424587f-68dc-424d-89d9-c3a802bd4393",
-    "role": "company",
-    "email": "q@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/globe-americas-solid.svg",
     "name": "Chrisparkle Cleaning Services",
     "address": "99, rue de Rivoli, Paris",
@@ -163,9 +130,6 @@
   },
   {
     "id": "da87f63b-1a8e-4851-b2ed-377f6b48fbc8",
-    "role": "company",
-    "email": "qwertyuiop@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/dog-solid.svg",
     "name": "Chistogoliki",
     "address": "Piazza della Scala, Milano",
@@ -181,9 +145,6 @@
   },
   {
     "id": "998eb47d-b271-4cdd-88a6-b284eabf309b",
-    "role": "company",
-    "email": "qwertyuio@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/crow-solid.svg",
     "name": "Gryazi net",
     "address": "263 Prinsengracht, Amsterdam",
@@ -199,9 +160,6 @@
   },
   {
     "id": "09a325b0-8a70-4a0c-b179-fee6dfa6cdab",
-    "role": "company",
-    "email": "qwertyui@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/bread-slice-solid.svg",
     "name": "Blesk",
     "address": "1060 West Addison Street, Chigaco",
@@ -218,9 +176,6 @@
   },
   {
     "id": "e0185c65-7772-4e0c-ab2f-41749c449027",
-    "role": "company",
-    "email": "qwertyu@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/city-solid.svg",
     "name": "City Cleaning",
     "address": "10 Downing Street, London",
@@ -231,9 +186,6 @@
   },
   {
     "id": "9647df50-7bb9-4b88-9bb7-187080afc37e",
-    "role": "company",
-    "email": "qwertyp@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/birthday-cake-solid.svg",
     "name": "Merry Maids",
     "address": "30 Rockefeller Plaza, Manhattan, NY",
@@ -253,9 +205,6 @@
   },
   {
     "id": "d08b7cde-2751-43d4-a41e-b6b355b952df",
-    "role": "company",
-    "email": "qwertyop@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/baseball-ball-solid.svg",
     "name": "Molly Maid",
     "address": "6925 Hollywood Boulevard, Hollywood, CA",
@@ -275,9 +224,6 @@
   },
   {
     "id": "7f446702-2af8-4d5c-8a5e-a67411c67f1b",
-    "role": "company",
-    "email": "qwertyiop@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/box-open-solid.svg",
     "name": "Fresh Carpet",
     "address": "Off A344 Road, Amesbury, Wiltshire",
@@ -288,9 +234,6 @@
   },
   {
     "id": "c33cada7-30f6-4498-9099-f013b9cad7d5",
-    "role": "company",
-    "email": "qwertyuiopqwerty@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/bread-slice-solid.svg",
     "name": "Krasniy Uborshik",
     "address": "Red Square, Moscow",
@@ -301,9 +244,6 @@
   },
   {
     "id": "d1b82576-49e5-45ae-b8da-4da22802d27b",
-    "role": "company",
-    "email": "qwertyqwerty@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/cogs-solid.svg",
     "name": "Wendi's Cleaning Service",
     "address": "Number 4, Privet Drive, Little Whinging",
@@ -314,9 +254,6 @@
   },
   {
     "id": "a0a5a36e-73bb-4af7-a89c-3997460d91a6",
-    "role": "company",
-    "email": "qwertyqw@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/dice-two-solid.svg",
     "name": "Residential Cleaning Service",
     "address": "42 Wallaby Way, Sydney",
@@ -327,9 +264,6 @@
   },
   {
     "id": "905a1544-c751-4fbe-a1e0-b92acab4b0d7",
-    "role": "company",
-    "email": "qwertyqwe@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/cookie-bite-solid.svg",
     "name": "Horns&Hooves",
     "address": "11 Derby Street, Nawton",
@@ -340,9 +274,6 @@
   },
   {
     "id": "76f8d5d4-0096-45d3-abd6-bc35f3cf0521",
-    "role": "company",
-    "email": "qwertyqq@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/drumstick-bite-solid.svg",
     "name": "Heh&Hah",
     "address": "ul. Tolstogo 10, Minsk",
@@ -353,9 +284,6 @@
   },
   {
     "id": "a37e1d0f-7d27-4958-8ad1-f3d84e701756",
-    "role": "company",
-    "email": "qwertyqwq@gmail.com",
-    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "logo": "./img/logo/fish-solid.svg",
     "name": "Fish",
     "address": "ul. Platonova 10, Minsk",

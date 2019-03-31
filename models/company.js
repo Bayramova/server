@@ -3,7 +3,7 @@
 const Sequelize = require("sequelize");
 const uuid = require("uuid/v4");
 const db = require("../config/database");
-// const User = require("../models/user");
+// const User = require("./user");
 
 const Company = db.sequelize.define("company", {
   id: {
@@ -12,22 +12,9 @@ const Company = db.sequelize.define("company", {
     primaryKey: true,
     defaultValue: uuid()
   },
-  role: {
-    type: Sequelize.STRING,
-    defaultValue: "company"
-  },
-  email: {
-    type: Sequelize.STRING,
-    unique: true,
-    allowNull: false
-  },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
   logo: {
     type: Sequelize.STRING,
-    defaultValue: "./img/logo/dice-two-solid.svg"
+    defaultValue: "./img/logo/question-solid.svg"
   },
   name: {
     type: Sequelize.STRING
@@ -55,10 +42,9 @@ const Company = db.sequelize.define("company", {
   }
 });
 
-// Company.hasMany(User, {
-//   as: "employees",
-//   foreignKey: "companyId",
-//   sourceKey: "id"
+// Company.hasOne(User, {
+//   foreignKey: "id",
+//   targetKey: "id"
 // });
 
 module.exports = Company;

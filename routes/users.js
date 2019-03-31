@@ -8,8 +8,8 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-// const Client = require("../models/client");
-// const Company = require("../models/company");
+const Client = require("../models/client");
+const Company = require("../models/company");
 const jwtSecret = require("../config/keys");
 
 router.post("/signup", (req, res) => {
@@ -21,13 +21,51 @@ router.post("/signup", (req, res) => {
     if (user) {
       return res.status(400).json({ email: "Email already exists!" });
     }
-    const newUser = { ...req.body };
+
+    const newUser = User.build({
+      role: req.body.role,
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password
+    });
+
+    // const newRole =
+    //   req.body.role === "client"
+    //     ? Client.create({
+    //         name: req.body.name,
+    //         address: req.body.address
+    //       })
+    //     : Company.create({
+    //         logo: req.body.logo,
+    //         name: req.body.name,
+    //         address: req.body.address,
+    //         services: req.body.services
+    //       });
+
+    if (req.body.role === "client") {
+      const newClient = Client.create({
+        name: req.body.name,
+        address: req.body.address
+      });
+      // newUser.id = newClient.id;
+      newUser.setClient(newClient, { save: false });
+    } else {
+      const newCompany = Company.create({
+        logo: req.body.logo,
+        name: req.body.name,
+        address: req.body.address,
+        services: req.body.services
+      });
+      // newUser.id = newCompany.id;
+      newUser.setClient(newCompany, { save: false });
+    }
 
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
         if (err) throw err;
         newUser.password = hash;
-        return User.create(newUser)
+        newUser
+          .save()
           .then(user => {
             res.json(user);
           })
@@ -52,15 +90,14 @@ router.post("/signin", (req, res) => {
         const payload = {
           id: user.id,
           email: user.email,
-          role: user.role,
-          iat: 1516234022
+          role: user.role
         };
 
         jwt.sign(
           payload,
           jwtSecret.secret,
           {
-            expiresIn: 10
+            expiresIn: "1h"
           },
           (err, token) => {
             res.json({

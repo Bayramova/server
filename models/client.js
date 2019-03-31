@@ -1,39 +1,28 @@
 "use strict";
 
 const Sequelize = require("sequelize");
+const uuid = require("uuid/v4");
 const db = require("../config/database");
+// const User = require("./user");
 
-const Client = db.sequelize.define(
-  "client",
-  {
-    id: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    role: {
-      type: Sequelize.STRING,
-      defaultValue: "client"
-    },
-    email: {
-      type: Sequelize.STRING,
-      unique: true,
-      allowNull: false
-    },
-    password: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    name: {
-      type: Sequelize.STRING
-    },
-    address: {
-      type: Sequelize.STRING
-    }
+const Client = db.sequelize.define("client", {
+  id: {
+    type: Sequelize.UUID,
+    allowNull: false,
+    primaryKey: true,
+    defaultValue: uuid()
   },
-  {
-    timestamps: false
+  name: {
+    type: Sequelize.STRING
+  },
+  address: {
+    type: Sequelize.STRING
   }
-);
+});
+
+// Client.hasOne(User, {
+//   foreignKey: "id",
+//   targetKey: "id"
+// });
 
 module.exports = Client;
