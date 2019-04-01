@@ -39,7 +39,7 @@ router.post("/signup", async (req, res) => {
         newUser.client_id = newClient.id;
       }
     } else {
-      const newCompany = Company.create({
+      const newCompany = await Company.create({
         logo: req.body.logo,
         name: req.body.name,
         address: req.body.address,
@@ -93,6 +93,58 @@ router.post("/signin", async (req, res) => {
     });
   } catch (error) {
     console.error(error);
+  }
+});
+
+router.get("/user/profile", async (req, res) => {
+  try {
+    const user = await User.findById(req.body.id);
+    return res.send(user);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.put("/user/profile/edit", async (req, res) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        email: req.body.email
+      }
+    });
+    if (user) {
+      return res.status(400).json({ email: "Email already exists!" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(req.body.password, salt);
+    const updatedUser = await User.update(
+      {
+        email: req.body.email,
+        password: hash
+      },
+      {
+        where: {
+          id: req.body.id
+        }
+      }
+    );
+    if (updatedUser.client_id) {
+      await Client.update({
+        name: req.body.name,
+        address: req.body.address
+      });
+    } else {
+      await Company.update({
+        logo: req.body.logo,
+        name: req.body.name,
+        address: req.body.address,
+        services: req.body.services
+      });
+    }
+    return res.send(updatedUser);
+  } catch (error) {
+    console.log(error);
   }
 });
 
