@@ -20,9 +20,7 @@ const Service = db.sequelize.define(
       type: Sequelize.TEXT
     }
   },
-  {
-    timestamps: false
-  }
+  { timestamps: false }
 );
 
 module.exports = Service;

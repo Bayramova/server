@@ -18,12 +18,22 @@ const sequelize = new Sequelize(
       idle: 10000
     },
     define: {
+      sync: true,
+      forceSync: false,
       timestamps: false
     }
   }
 );
 
+sequelize.authenticate().then(err => {
+  if (err) {
+    console.error("Unable to connect to the database:", err);
+  } else {
+    sequelize.sync();
+    console.log("Connection has been established successfully.");
+  }
+});
+
 db.sequelize = sequelize;
-db.sequelize.sync();
 
 module.exports = db;

@@ -3,7 +3,6 @@
 const Sequelize = require("sequelize");
 const uuid = require("uuid/v4");
 const db = require("../config/database");
-// const User = require("./user");
 
 const Client = db.sequelize.define("client", {
   id: {
@@ -19,10 +18,5 @@ const Client = db.sequelize.define("client", {
     type: Sequelize.STRING
   }
 });
-
-// Client.hasOne(User, {
-//   foreignKey: "id",
-//   targetKey: "id"
-// });
 
 module.exports = Client;

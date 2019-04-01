@@ -12,12 +12,13 @@ const Client = require("../models/client");
 const Company = require("../models/company");
 const jwtSecret = require("../config/keys");
 
-router.post("/signup", (req, res) => {
-  User.findOne({
-    where: {
-      email: req.body.email
-    }
-  }).then(user => {
+router.post("/signup", async (req, res) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        email: req.body.email
+      }
+    });
     if (user) {
       return res.status(400).json({ email: "Email already exists!" });
     }
@@ -29,26 +30,14 @@ router.post("/signup", (req, res) => {
       password: req.body.password
     });
 
-    // const newRole =
-    //   req.body.role === "client"
-    //     ? Client.create({
-    //         name: req.body.name,
-    //         address: req.body.address
-    //       })
-    //     : Company.create({
-    //         logo: req.body.logo,
-    //         name: req.body.name,
-    //         address: req.body.address,
-    //         services: req.body.services
-    //       });
-
     if (req.body.role === "client") {
-      const newClient = Client.create({
+      const newClient = await Client.create({
         name: req.body.name,
         address: req.body.address
       });
-      // newUser.id = newClient.id;
-      newUser.setClient(newClient, { save: false });
+      if (newClient) {
+        newUser.client_id = newClient.id;
+      }
     } else {
       const newCompany = Company.create({
         logo: req.body.logo,
@@ -56,63 +45,55 @@ router.post("/signup", (req, res) => {
         address: req.body.address,
         services: req.body.services
       });
-      // newUser.id = newCompany.id;
-      newUser.setClient(newCompany, { save: false });
+      if (newCompany) {
+        newUser.company_id = newCompany.id;
+      }
     }
 
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
-        if (err) throw err;
-        newUser.password = hash;
-        newUser
-          .save()
-          .then(user => {
-            res.json(user);
-          })
-          .catch(err => console.log(err));
-      });
-    });
-  });
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(newUser.password, salt);
+    newUser.password = hash;
+    const registeredUser = newUser.save();
+    if (registeredUser) {
+      res.json(registeredUser);
+    }
+  } catch (error) {
+    console.error(error);
+  }
 });
 
-router.post("/signin", (req, res) => {
-  User.findOne({
-    where: {
-      email: req.body.email
-    }
-  }).then(user => {
+router.post("/signin", async (req, res) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        email: req.body.email
+      }
+    });
     if (!user) {
       return res.status(400).json({ emailincorrect: "No such user!" });
     }
 
-    bcrypt.compare(req.body.password, user.password).then(isMatch => {
-      if (isMatch) {
-        const payload = {
-          id: user.id,
-          email: user.email,
-          role: user.role
-        };
+    const match = await bcrypt.compare(req.body.password, user.password);
+    if (!match) {
+      return res.status(400).json({ passwordincorrect: "Incorrect password!" });
+    }
 
-        jwt.sign(
-          payload,
-          jwtSecret.secret,
-          {
-            expiresIn: "1h"
-          },
-          (err, token) => {
-            res.json({
-              success: true,
-              token: `Bearer ${token}`
-            });
-          }
-        );
-      } else {
-        return res
-          .status(400)
-          .json({ passwordincorrect: "Incorrect password!" });
-      }
+    const payload = {
+      id: user.id,
+      email: user.email,
+      role: user.role
+    };
+    const token = jwt.sign(payload, jwtSecret.secret, {
+      expiresIn: "1h"
     });
-  });
+
+    return res.json({
+      success: true,
+      token: `Bearer ${token}`
+    });
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 module.exports = router;

@@ -1,18 +1,17 @@
 "use strict";
 
 const Sequelize = require("sequelize");
-// const uuid = require("uuid/v4");
 const db = require("../config/database");
 const Company = require("../models/company");
 const Client = require("../models/client");
 
 const User = db.sequelize.define("user", {
-  // id: {
-  //   type: Sequelize.UUID,
-  //   allowNull: false,
-  //   primaryKey: true,
-  //   defaultValue: uuid()
-  // },
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true
+  },
   role: {
     type: Sequelize.ENUM("client", "company", "admin"),
     defaultValue: "client"
@@ -32,7 +31,7 @@ User.belongsTo(Client, {
   foreignKey: "client_id",
   targetKey: "id",
   allowNull: true,
-  defaultValue: null
+  default: null
 });
 
 User.belongsTo(Company, {
