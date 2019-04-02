@@ -7,7 +7,8 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const User = require("../models/user");
+const { User } = require("../models/user");
+const { client } = require("../models/user");
 const Client = require("../models/client");
 const Company = require("../models/company");
 const jwtSecret = require("../config/keys");
@@ -30,7 +31,7 @@ router.post("/signup", async (req, res) => {
       password: req.body.password
     });
 
-    if (req.body.role === "client") {
+    if (req.body.role === client) {
       const newClient = await Client.create({
         name: req.body.name,
         address: req.body.address
@@ -80,16 +81,16 @@ router.post("/signin", async (req, res) => {
 
     const payload = {
       id: user.id,
-      email: user.email,
-      role: user.role
+      exp: 3600
     };
-    const token = jwt.sign(payload, jwtSecret.secret, {
-      expiresIn: "1h"
-    });
+    const token = jwt.sign(payload, jwtSecret.secret);
+
+    const { id, email, role } = user.dataValues;
 
     return res.json({
       success: true,
-      token: `Bearer ${token}`
+      token: `Bearer ${token}`,
+      user: { id, email, role }
     });
   } catch (error) {
     console.error(error);
@@ -98,8 +99,14 @@ router.post("/signin", async (req, res) => {
 
 router.get("/user/profile", async (req, res) => {
   try {
-    const user = await User.findById(req.body.id);
-    return res.send(user);
+    const user = await User.findOne({
+      where: {
+        id: req.body.id
+      },
+      includes: Client
+    });
+    const { client } = user.dataValues;
+    return res.json(client.dataValues);
   } catch (error) {
     console.log(error);
   }
@@ -107,20 +114,20 @@ router.get("/user/profile", async (req, res) => {
 
 router.put("/user/profile/edit", async (req, res) => {
   try {
-    const user = await User.findOne({
-      where: {
-        email: req.body.email
-      }
-    });
-    if (user) {
-      return res.status(400).json({ email: "Email already exists!" });
-    }
+    // const user = await User.findOne({
+    //   where: {
+    //     email: req.body.email
+    //   }
+    // });
+    // if (user) {
+    //   return res.status(400).json({ email: "Email already exists!" });
+    // }
 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(req.body.password, salt);
     const updatedUser = await User.update(
       {
-        email: req.body.email,
+        // email: req.body.email,
         password: hash
       },
       {
@@ -129,11 +136,23 @@ router.put("/user/profile/edit", async (req, res) => {
         }
       }
     );
-    if (updatedUser.client_id) {
-      await Client.update({
-        name: req.body.name,
-        address: req.body.address
+    if (updatedUser) {
+      const user = await User.findOne({
+        where: {
+          id: req.body.id
+        }
       });
+      await Client.update(
+        {
+          name: req.body.name,
+          address: req.body.address
+        },
+        {
+          where: {
+            id: user.client_id
+          }
+        }
+      );
     } else {
       await Company.update({
         logo: req.body.logo,

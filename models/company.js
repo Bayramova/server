@@ -1,17 +1,15 @@
 "use strict";
 
 const Sequelize = require("sequelize");
-const uuid = require("uuid/v4");
 const db = require("../config/database");
 
 const Company = db.sequelize.define(
   "company",
   {
     id: {
-      type: Sequelize.UUID,
-      allowNull: false,
+      type: Sequelize.INTEGER,
       primaryKey: true,
-      defaultValue: uuid()
+      autoIncrement: true
     },
     logo: {
       type: Sequelize.STRING,

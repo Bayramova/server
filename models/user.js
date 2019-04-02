@@ -5,16 +5,19 @@ const db = require("../config/database");
 const Company = require("../models/company");
 const Client = require("../models/client");
 
+const client = "client";
+const company = "company";
+const admin = "admin";
+
 const User = db.sequelize.define("user", {
   id: {
     type: Sequelize.INTEGER,
-    allowNull: false,
     primaryKey: true,
     autoIncrement: true
   },
   role: {
-    type: Sequelize.ENUM("client", "company", "admin"),
-    defaultValue: "client"
+    type: Sequelize.ENUM(client, company, admin),
+    defaultValue: client
   },
   email: {
     type: Sequelize.STRING,
@@ -31,7 +34,7 @@ User.belongsTo(Client, {
   foreignKey: "client_id",
   targetKey: "id",
   allowNull: true,
-  default: null
+  defaultValue: null
 });
 
 User.belongsTo(Company, {
@@ -41,4 +44,4 @@ User.belongsTo(Company, {
   defaultValue: null
 });
 
-module.exports = User;
+module.exports = { User, client, company };
