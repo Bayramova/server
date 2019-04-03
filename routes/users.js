@@ -97,22 +97,30 @@ router.post("/signin", async (req, res) => {
   }
 });
 
-router.get("/user/profile", async (req, res) => {
+router.get("/user/profile/:id", async (req, res) => {
   try {
     const user = await User.findOne({
       where: {
-        id: req.body.id
+        id: req.params.id
       },
       includes: Client
     });
-    const { client } = user.dataValues;
-    return res.json(client.dataValues);
+    if (user) {
+      const client = await Client.findOne({
+        where: {
+          id: user.client_id
+        }
+      });
+      return res.json({
+        client
+      });
+    }
   } catch (error) {
     console.log(error);
   }
 });
 
-router.put("/user/profile/edit", async (req, res) => {
+router.put("/user/profile/:id/edit", async (req, res) => {
   try {
     // const user = await User.findOne({
     //   where: {
@@ -123,44 +131,36 @@ router.put("/user/profile/edit", async (req, res) => {
     //   return res.status(400).json({ email: "Email already exists!" });
     // }
 
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(req.body.password, salt);
-    const updatedUser = await User.update(
+    // const salt = await bcrypt.genSalt(10);
+    // const hash = await bcrypt.hash(req.body.password, salt);
+    // const updatedUser = await User.update(
+    //   {
+    //     // email: req.body.email,
+    //     password: hash
+    //   },
+    //   {
+    //     where: {
+    //       id: req.params.id
+    //     }
+    //   }
+    // );
+    // if (updatedUser) {
+    const user = await User.findOne({
+      where: {
+        id: req.params.id
+      }
+    });
+    const updatedUser = await Client.update(
       {
-        // email: req.body.email,
-        password: hash
+        name: req.body.name,
+        address: req.body.address
       },
       {
         where: {
-          id: req.body.id
+          id: user.client_id
         }
       }
     );
-    if (updatedUser) {
-      const user = await User.findOne({
-        where: {
-          id: req.body.id
-        }
-      });
-      await Client.update(
-        {
-          name: req.body.name,
-          address: req.body.address
-        },
-        {
-          where: {
-            id: user.client_id
-          }
-        }
-      );
-    } else {
-      await Company.update({
-        logo: req.body.logo,
-        name: req.body.name,
-        address: req.body.address,
-        services: req.body.services
-      });
-    }
     return res.send(updatedUser);
   } catch (error) {
     console.log(error);
