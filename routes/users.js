@@ -97,22 +97,31 @@ router.post("/signin", async (req, res) => {
   }
 });
 
-router.get("/user/profile/:id", async (req, res) => {
+router.get("/user/:id", async (req, res) => {
   try {
     const user = await User.findOne({
       where: {
         id: req.params.id
-      },
-      includes: Client
+      }
     });
     if (user) {
-      const client = await Client.findOne({
+      if (user.role === client) {
+        const userData = await Client.findOne({
+          where: {
+            id: user.client_id
+          }
+        });
+        return res.json({
+          userData
+        });
+      }
+      const userData = await Company.findOne({
         where: {
-          id: user.client_id
+          id: user.company_id
         }
       });
       return res.json({
-        client
+        userData
       });
     }
   } catch (error) {
@@ -120,48 +129,90 @@ router.get("/user/profile/:id", async (req, res) => {
   }
 });
 
-router.put("/user/profile/:id/edit", async (req, res) => {
-  try {
-    // const user = await User.findOne({
-    //   where: {
-    //     email: req.body.email
-    //   }
-    // });
-    // if (user) {
-    //   return res.status(400).json({ email: "Email already exists!" });
-    // }
+router.put("/user/:id/edit", async (req, res) => {
+  // const user = await User.findOne({
+  //   where: {
+  //     email: req.body.email
+  //   }
+  // });
+  // if (user) {
+  //   return res.status(400).json({ email: "Email already exists!" });
+  // }
 
-    // const salt = await bcrypt.genSalt(10);
-    // const hash = await bcrypt.hash(req.body.password, salt);
-    // const updatedUser = await User.update(
-    //   {
-    //     // email: req.body.email,
-    //     password: hash
-    //   },
-    //   {
-    //     where: {
-    //       id: req.params.id
-    //     }
-    //   }
-    // );
-    // if (updatedUser) {
+  // const salt = await bcrypt.genSalt(10);
+  // const hash = await bcrypt.hash(req.body.password, salt);
+  // const updatedUser = await User.update(
+  //   {
+  //     // email: req.body.email,
+  //     password: hash
+  //   },
+  //   {
+  //     where: {
+  //       id: req.params.id
+  //     }
+  //   }
+  // );
+  // if (updatedUser) {
+  //   const user = await User.findOne({
+  //     where: {
+  //       id: req.params.id
+  //     }
+  //   });
+  //   const updatedUser = await Client.update(
+  //     {
+  //       name: req.body.name,
+  //       address: req.body.address
+  //     },
+  //     {
+  //       where: {
+  //         id: user.client_id
+  //       }
+  //     }
+  //   );
+  //   return res.send(updatedUser);
+  // } catch (error) {
+  //   console.log(error);
+  // }
+  try {
     const user = await User.findOne({
       where: {
         id: req.params.id
       }
     });
-    const updatedUser = await Client.update(
-      {
-        name: req.body.name,
-        address: req.body.address
-      },
-      {
-        where: {
-          id: user.client_id
-        }
+    if (user) {
+      if (user.role === client) {
+        const updatedUserData = await Client.update(
+          {
+            name: req.body.name,
+            address: req.body.address
+          },
+          {
+            where: {
+              id: user.client_id
+            }
+          }
+        );
+        return res.json({
+          updatedUserData
+        });
       }
-    );
-    return res.send(updatedUser);
+      const updatedUserData = await Company.update(
+        {
+          logo: req.body.logo,
+          name: req.body.name,
+          address: req.body.address,
+          services: req.body.services
+        },
+        {
+          where: {
+            id: user.company_id
+          }
+        }
+      );
+      return res.json({
+        updatedUserData
+      });
+    }
   } catch (error) {
     console.log(error);
   }
