@@ -7,6 +7,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const jwtDecode = require("jwt-decode");
 const { User } = require("../models/user");
 const { client } = require("../models/user");
 const Client = require("../models/client");
@@ -94,6 +95,35 @@ router.post("/signin", async (req, res) => {
     });
   } catch (error) {
     console.error(error);
+  }
+});
+
+router.post("/user_from_token", async (req, res) => {
+  try {
+    console.log(`!!!!!!!!!!!!!!!!!!!!!!!!1 ${req.body}`);
+    const token = req.body;
+    if (!token) {
+      return res.status(401).json({
+        message: "Must pass token"
+      });
+    }
+    const decoded = await jwt.verify(token, jwtSecret.secret);
+    if (decoded) {
+      const user = await User.findOne({
+        where: {
+          id: decoded.id
+        }
+      });
+      if (user) {
+        return res.json({
+          success: true,
+          token: `Bearer ${token}`,
+          user
+        });
+      }
+    }
+  } catch (err) {
+    console.log(err);
   }
 });
 
