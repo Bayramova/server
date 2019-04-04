@@ -3,15 +3,17 @@
 const Sequelize = require("sequelize");
 const db = require("../config/database");
 
-module.exports = db.sequelize.define(
+const Company = db.sequelize.define(
   "company",
   {
     id: {
-      type: Sequelize.STRING,
-      primaryKey: true
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
     },
     logo: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      defaultValue: "./img/logo/question-solid.svg"
     },
     name: {
       type: Sequelize.STRING
@@ -38,7 +40,7 @@ module.exports = db.sequelize.define(
       type: Sequelize.STRING
     }
   },
-  {
-    timestamps: false
-  }
+  { timestamps: false }
 );
+
+module.exports = Company;

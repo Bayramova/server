@@ -16,9 +16,23 @@ const sequelize = new Sequelize(
       min: 0,
       acquire: 30000,
       idle: 10000
+    },
+    define: {
+      sync: true,
+      forceSync: false,
+      timestamps: false
     }
   }
 );
+
+sequelize.authenticate().then(err => {
+  if (err) {
+    console.error("Unable to connect to the database:", err);
+  } else {
+    sequelize.sync();
+    console.log("Connection has been established successfully.");
+  }
+});
 
 db.sequelize = sequelize;
 

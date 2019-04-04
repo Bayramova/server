@@ -1,5 +1,152 @@
-[{
-  "email": "vasyapupkin@gmail.com",
-  "password": "$2y$10$1tcuKaFrsQegUtQrwLhFc.01qo8BXT/S/SBIyEhXVszUj/2FEbW/S",
-  "role": "client"
-}]
+[
+  {
+    "role": "company",
+    "email": "qwerty@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "1"
+  },
+  {
+    "role": "company",
+    "email": "werty@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "2"
+  },
+  {
+    "role": "company",
+    "email": "erty@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "3"
+  },
+  {
+    "role": "company",
+    "email": "rty@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "4"
+  },
+  {
+    "role": "company",
+    "email": "ty@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "5"
+  },
+  {
+    "role": "company",
+    "email": "y@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "6"
+  },
+  {
+    "role": "company",
+    "email": "qwert@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "7"
+  },
+  {
+    "role": "company",
+    "email": "qwer@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "8"
+  },
+  {
+    "role": "company",
+    "email": "qwe@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "9"
+  },
+  {
+    "role": "company",
+    "email": "qw@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "10"
+  },
+  {
+    "role": "company",
+    "email": "q@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "11"
+  },
+  {
+    "role": "company",
+    "email": "qwertyuiop@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "12"
+  },
+  {
+    "role": "company",
+    "email": "qwertyuio@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "13"
+  },
+  {
+    "role": "company",
+    "email": "qwertyui@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "14"
+  },
+  {
+    "role": "company",
+    "email": "qwertyu@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "15"
+  },
+  {
+    "role": "company",
+    "email": "qwertyp@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "16"
+  },
+  {
+    "role": "company",
+    "email": "qwertyop@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "17"
+  },
+  {
+    "role": "company",
+    "email": "qwertyiop@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "18"
+  },
+  {
+    "role": "company",
+    "email": "qwertyuiopqwerty@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "19"
+  },
+  {
+    "role": "company",
+    "email": "qwertyqwerty@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "20"
+  },
+  {
+    "role": "company",
+    "email": "qwertyqw@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "21"
+  },
+  {
+    "role": "company",
+    "email": "qwertyqwe@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "22"
+  },
+  {
+    "role": "company",
+    "email": "qwertyqq@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "23"
+  },
+  {
+    "role": "company",
+    "email": "qwertyqwq@gmail.com",
+    "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
+    "company_id": "24"
+  },
+  {
+    "email": "vasyapupkin@gmail.com",
+    "password": "$2y$10$1tcuKaFrsQegUtQrwLhFc.01qo8BXT/S/SBIyEhXVszUj/2FEbW/S",
+    "role": "client",
+    "client_id": "1"
+  }
+]

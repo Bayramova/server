@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "lint": "eslint --fix . --ext .js",
-    "data": "node scripts/import --table=services --filename=services.json && node scripts/import --table=companies --filename=companies.json"
+    "data": "node scripts/import --table=services --filename=services.json && node scripts/import --table=companies --filename=companies.json && node scripts/import --table=clients --filename=clients.json && node scripts/import --table=users --filename=users.json"
   },
   "keywords": [],
   "author": "",
@@ -19,12 +19,14 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^2.2.0",
     "minimist": "^1.2.0",
     "morgan": "^1.9.1",
     "mysql2": "^1.6.5",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
-    "sequelize": "^5.1.0"
+    "sequelize": "^5.1.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "eslint": "^5.15.3",

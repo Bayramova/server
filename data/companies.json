@@ -1,6 +1,5 @@
 [
   {
-    "id": "freshperspectives",
     "logo": "./img/logo/atom-solid.svg",
     "name": "Fresh Perspectives",
     "address": "1600 Pennsylvania Avenue, Washington",
@@ -10,7 +9,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "uborkakvartir",
     "logo": "./img/logo/bath-solid.svg",
     "name": "Uborka Kvartir",
     "address": "11 Wall Street New York, NY",
@@ -20,7 +18,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "sparklingpalaces",
     "logo": "./img/logo/candy-cane-solid.svg",
     "name": "Sparkling Palaces",
     "address": "350 Fifth Avenue New York, NY",
@@ -30,7 +27,6 @@
     "reviewsNumber": "30"
   },
   {
-    "id": "housecleaners",
     "logo": "./img/logo/cat-solid.svg",
     "name": "House Cleaners",
     "address": "221 B Baker St, London",
@@ -45,7 +41,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "rogaikopyta",
     "logo": "./img/logo/frog-solid.svg",
     "name": "Roga&Kopyta",
     "address": "Tour Eiffel Champ de Mars, Paris",
@@ -64,7 +59,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "cowboyscleaning",
     "logo": "./img/logo/ghost-solid.svg",
     "name": "Cowboys Cleaning",
     "address": "4059 Mt Lee Dr. Hollywood, CA",
@@ -74,7 +68,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "ramclean",
     "logo": "./img/logo/hamburger-solid.svg",
     "name": "RamClean Cleaning Services",
     "address": "Buckingham Palace, London",
@@ -84,7 +77,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "stormyscleaning",
     "logo": "./img/logo/hippo-solid.svg",
     "name": "Stormy's Cleaning Service",
     "address": "Statue of Liberty, Liberty Island New York, NY",
@@ -99,7 +91,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "aacleaning",
     "logo": "./img/logo/horse-solid.svg",
     "name": "A&A Cleaning Services",
     "address": "Manager Square, Bethlehem, West Bank",
@@ -109,7 +100,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "goclean",
     "logo": "./img/logo/home-solid.svg",
     "name": "GoClean",
     "address": "2 Macquarie Street, Sydney",
@@ -119,7 +109,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "chrisparklecleaning",
     "logo": "./img/logo/globe-americas-solid.svg",
     "name": "Chrisparkle Cleaning Services",
     "address": "99, rue de Rivoli, Paris",
@@ -129,7 +118,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "houseclechistogolikianers",
     "logo": "./img/logo/dog-solid.svg",
     "name": "Chistogoliki",
     "address": "Piazza della Scala, Milano",
@@ -144,7 +132,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "gryazinet",
     "logo": "./img/logo/crow-solid.svg",
     "name": "Gryazi net",
     "address": "263 Prinsengracht, Amsterdam",
@@ -159,7 +146,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "blesk",
     "logo": "./img/logo/bread-slice-solid.svg",
     "name": "Blesk",
     "address": "1060 West Addison Street, Chigaco",
@@ -175,7 +161,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "citycleaning",
     "logo": "./img/logo/city-solid.svg",
     "name": "City Cleaning",
     "address": "10 Downing Street, London",
@@ -185,7 +170,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "merrymaid",
     "logo": "./img/logo/birthday-cake-solid.svg",
     "name": "Merry Maids",
     "address": "30 Rockefeller Plaza, Manhattan, NY",
@@ -204,7 +188,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "mollymaid",
     "logo": "./img/logo/baseball-ball-solid.svg",
     "name": "Molly Maid",
     "address": "6925 Hollywood Boulevard, Hollywood, CA",
@@ -223,7 +206,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "freshcarpet",
     "logo": "./img/logo/box-open-solid.svg",
     "name": "Fresh Carpet",
     "address": "Off A344 Road, Amesbury, Wiltshire",
@@ -233,7 +215,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "krasniyuborshik",
     "logo": "./img/logo/bread-slice-solid.svg",
     "name": "Krasniy Uborshik",
     "address": "Red Square, Moscow",
@@ -243,7 +224,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "wendiscleaning",
     "logo": "./img/logo/cogs-solid.svg",
     "name": "Wendi's Cleaning Service",
     "address": "Number 4, Privet Drive, Little Whinging",
@@ -253,7 +233,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "residentialcleaning",
     "logo": "./img/logo/dice-two-solid.svg",
     "name": "Residential Cleaning Service",
     "address": "42 Wallaby Way, Sydney",
@@ -263,7 +242,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "hornshooves",
     "logo": "./img/logo/cookie-bite-solid.svg",
     "name": "Horns&Hooves",
     "address": "11 Derby Street, Nawton",
@@ -273,7 +251,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "hehhah",
     "logo": "./img/logo/drumstick-bite-solid.svg",
     "name": "Heh&Hah",
     "address": "ul. Tolstogo 10, Minsk",
@@ -283,7 +260,6 @@
     "reviewsNumber": "25"
   },
   {
-    "id": "fish",
     "logo": "./img/logo/fish-solid.svg",
     "name": "Fish",
     "address": "ul. Platonova 10, Minsk",
