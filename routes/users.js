@@ -1,3 +1,5 @@
+/* eslint-disable eqeqeq */
+
 "use strict";
 
 /* eslint-disable consistent-return */
@@ -82,7 +84,7 @@ router.post("/signin", async (req, res) => {
 
     const payload = {
       id: user.id,
-      exp: 3600
+      exp: Math.floor(Date.now() / 1000) + 60 * 60
     };
     const token = jwt.sign(payload, jwtSecret.secret);
 
@@ -98,27 +100,23 @@ router.post("/signin", async (req, res) => {
   }
 });
 
-router.post("/user_from_token", async (req, res) => {
+router.get("/user/from/token", async (req, res) => {
   try {
-    console.log(`!!!!!!!!!!!!!!!!!!!!!!!!1 ${req.body}`);
-    const token = req.body;
-    if (!token) {
-      return res.status(401).json({
-        message: "Must pass token"
-      });
-    }
-    const decoded = await jwt.verify(token, jwtSecret.secret);
+    const token = req.headers["x-access-token"];
+    if (!token) return res.status(401).json({ message: "No token provided." });
+
+    const decoded = jwtDecode(token).id;
     if (decoded) {
       const user = await User.findOne({
         where: {
-          id: decoded.id
+          id: decoded
         }
       });
       if (user) {
+        const { id, email, role } = user.dataValues;
         return res.json({
-          success: true,
-          token: `Bearer ${token}`,
-          user
+          token,
+          user: { id, email, role }
         });
       }
     }
@@ -160,88 +158,56 @@ router.get("/user/:id", async (req, res) => {
 });
 
 router.put("/user/:id/edit", async (req, res) => {
-  // const user = await User.findOne({
-  //   where: {
-  //     email: req.body.email
-  //   }
-  // });
-  // if (user) {
-  //   return res.status(400).json({ email: "Email already exists!" });
-  // }
-
-  // const salt = await bcrypt.genSalt(10);
-  // const hash = await bcrypt.hash(req.body.password, salt);
-  // const updatedUser = await User.update(
-  //   {
-  //     // email: req.body.email,
-  //     password: hash
-  //   },
-  //   {
-  //     where: {
-  //       id: req.params.id
-  //     }
-  //   }
-  // );
-  // if (updatedUser) {
-  //   const user = await User.findOne({
-  //     where: {
-  //       id: req.params.id
-  //     }
-  //   });
-  //   const updatedUser = await Client.update(
-  //     {
-  //       name: req.body.name,
-  //       address: req.body.address
-  //     },
-  //     {
-  //       where: {
-  //         id: user.client_id
-  //       }
-  //     }
-  //   );
-  //   return res.send(updatedUser);
-  // } catch (error) {
-  //   console.log(error);
-  // }
   try {
     const user = await User.findOne({
+      where: {
+        email: req.body.email
+      }
+    });
+    if (user && user.id != req.params.id) {
+      return res.status(400).json({ email: "Email already exists!" });
+    }
+
+    const userToUpdate = await User.findOne({
       where: {
         id: req.params.id
       }
     });
-    if (user) {
-      if (user.role === client) {
-        const updatedUserData = await Client.update(
-          {
-            name: req.body.name,
-            address: req.body.address
-          },
-          {
-            where: {
-              id: user.client_id
-            }
+    if (userToUpdate) {
+      userToUpdate.email = req.body.email;
+      const updatedUser = await userToUpdate.save();
+      const { id, role, email } = updatedUser;
+      if (updatedUser.role === client) {
+        const clientToUpdate = await Client.findOne({
+          where: {
+            id: updatedUser.client_id
           }
-        );
+        });
+        if (clientToUpdate) {
+          clientToUpdate.name = req.body.name;
+          clientToUpdate.address = req.body.address;
+          const updatedClient = await clientToUpdate.save();
+          return res.json({
+            userData: { id, role, email },
+            additionalUserData: updatedClient
+          });
+        }
+      }
+      const companyToUpdate = await Company.findOne({
+        where: {
+          id: updatedUser.company_id
+        }
+      });
+      if (companyToUpdate) {
+        companyToUpdate.name = req.body.name;
+        companyToUpdate.address = req.body.address;
+        companyToUpdate.services = req.body.services;
+        const updatedCompany = await companyToUpdate.save();
         return res.json({
-          updatedUserData
+          userData: { id, role, email },
+          additionalUserData: updatedCompany
         });
       }
-      const updatedUserData = await Company.update(
-        {
-          logo: req.body.logo,
-          name: req.body.name,
-          address: req.body.address,
-          services: req.body.services
-        },
-        {
-          where: {
-            id: user.company_id
-          }
-        }
-      );
-      return res.json({
-        updatedUserData
-      });
     }
   } catch (error) {
     console.log(error);
