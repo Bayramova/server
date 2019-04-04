@@ -100,31 +100,6 @@ router.post("/signin", async (req, res) => {
   }
 });
 
-router.get("/user/from/token", async (req, res) => {
-  try {
-    const token = req.headers["x-access-token"];
-    if (!token) return res.status(401).json({ message: "No token provided." });
-
-    const decoded = jwtDecode(token).id;
-    if (decoded) {
-      const user = await User.findOne({
-        where: {
-          id: decoded
-        }
-      });
-      if (user) {
-        const { id, email, role } = user.dataValues;
-        return res.json({
-          token,
-          user: { id, email, role }
-        });
-      }
-    }
-  } catch (err) {
-    console.log(err);
-  }
-});
-
 router.get("/user/:id", async (req, res) => {
   try {
     const user = await User.findOne({
@@ -154,6 +129,31 @@ router.get("/user/:id", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
+  }
+});
+
+router.get("/user/from/token", async (req, res) => {
+  try {
+    const token = req.headers["x-access-token"];
+    if (!token) return res.status(401).json({ message: "No token provided." });
+
+    const decoded = jwtDecode(token).id;
+    if (decoded) {
+      const user = await User.findOne({
+        where: {
+          id: decoded
+        }
+      });
+      if (user) {
+        const { id, email, role } = user.dataValues;
+        return res.json({
+          token,
+          user: { id, email, role }
+        });
+      }
+    }
+  } catch (err) {
+    console.log(err);
   }
 });
 
