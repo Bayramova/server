@@ -1,7 +1,7 @@
-"use strict";
-
 /* eslint-disable no-eval */
 /* eslint-disable no-unused-vars */
+
+"use strict";
 
 const parseArgs = require("minimist");
 const fs = require("fs");
