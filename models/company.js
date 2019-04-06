@@ -1,6 +1,7 @@
 "use strict";
 
 const Sequelize = require("sequelize");
+const { Order } = require("./order");
 const db = require("../config/database");
 
 const Company = db.sequelize.define(
@@ -24,7 +25,7 @@ const Company = db.sequelize.define(
     rating: {
       type: Sequelize.STRING
     },
-    orders: {
+    ordersNumber: {
       type: Sequelize.STRING
     },
     services: {
@@ -42,5 +43,12 @@ const Company = db.sequelize.define(
   },
   { timestamps: false }
 );
+
+Company.hasMany(Order, {
+  foreignKey: "company_id",
+  sourceKey: "id",
+  allowNull: true,
+  defaultValue: null
+});
 
 module.exports = Company;
