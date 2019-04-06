@@ -14,6 +14,7 @@ const { User } = require("../models/user");
 const { client } = require("../models/user");
 const Client = require("../models/client");
 const Company = require("../models/company");
+const { Order } = require("../models/order");
 const jwtSecret = require("../config/keys");
 
 router.post("/signup", async (req, res) => {
@@ -211,6 +212,57 @@ router.put("/user/:id/edit", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
+  }
+});
+
+router.post("/make_order", async (req, res) => {
+  try {
+    const newOrder = await Order.create({
+      address: req.body.address,
+      service: req.body.service,
+      bigRooms: req.body.bigRooms,
+      smallRooms: req.body.smallRooms,
+      bathrooms: req.body.bathrooms,
+      daysOfCleaning: req.body.daysOfCleaning,
+      startTimeOfCleaning: req.body.startTimeOfCleaning,
+      cleaningFrequency: req.body.cleaningFrequency,
+      phone: req.body.phone,
+      client_id: req.body.clientId,
+      company_id: req.body.companyId
+    });
+    if (newOrder) {
+      res.json(newOrder);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+router.get("/user/:id/orders", async (req, res) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        id: req.params.id
+      }
+    });
+    if (user) {
+      if (user.role === client) {
+        const orders = await Order.findAll({
+          where: {
+            id: user.client_id
+          }
+        });
+        return res.json(orders);
+      }
+      const orders = await Order.findAll({
+        where: {
+          id: user.company_id
+        }
+      });
+      return res.json(orders);
+    }
+  } catch (err) {
+    console.log(`Error: ${err}`);
   }
 });
 

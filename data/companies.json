@@ -22,7 +22,7 @@
     "name": "Sparkling Palaces",
     "address": "350 Fifth Avenue New York, NY",
     "rating": "4",
-    "orders": "77",
+    "ordersNumer": "77",
     "services": ["industrialcleaning", "poolcleaning", "officecleaning"],
     "reviewsNumber": "30"
   },
