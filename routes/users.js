@@ -14,7 +14,13 @@ const { User } = require("../models/user");
 const { client } = require("../models/user");
 const Client = require("../models/client");
 const Company = require("../models/company");
-const { Order } = require("../models/order");
+const {
+  Order,
+  ordered,
+  confirmed,
+  cancelled,
+  done
+} = require("../models/order");
 const jwtSecret = require("../config/keys");
 
 router.post("/signup", async (req, res) => {
@@ -226,7 +232,9 @@ router.post("/make_order", async (req, res) => {
       daysOfCleaning: req.body.daysOfCleaning,
       startTimeOfCleaning: req.body.startTimeOfCleaning,
       cleaningFrequency: req.body.cleaningFrequency,
+      prefix: req.body.prefix,
       phone: req.body.phone,
+      cost: req.body.cost,
       client_id: req.body.clientId,
       company_id: req.body.companyId
     });
@@ -249,20 +257,42 @@ router.get("/user/:id/orders", async (req, res) => {
       if (user.role === client) {
         const orders = await Order.findAll({
           where: {
-            id: user.client_id
+            client_id: user.client_id
           }
         });
         return res.json(orders);
       }
       const orders = await Order.findAll({
         where: {
-          id: user.company_id
+          company_id: user.company_id
         }
       });
       return res.json(orders);
     }
   } catch (err) {
     console.log(`Error: ${err}`);
+  }
+});
+
+router.put("/cancel_order", async (req, res) => {
+  try {
+    console.log(req.body);
+    const order = await Order.findOne({
+      where: {
+        id: req.params.id
+      }
+    });
+    if (order) {
+      order.status = cancelled;
+      const cancelledOrder = await order.save();
+      if (cancelledOrder) {
+        return res.json({
+          success: true
+        });
+      }
+    }
+  } catch (error) {
+    console.log(error);
   }
 });
 
