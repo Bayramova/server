@@ -7,10 +7,10 @@ const parseArgs = require("minimist");
 const fs = require("fs");
 const path = require("path");
 const db = require("../config/database");
-const companies = require("../models/company");
-const services = require("../models/service");
-const clients = require("../models/client");
-const users = require("../models/user");
+const Company = require("../models/company");
+const Service = require("../models/service");
+const Client = require("../models/client");
+const { User } = require("../models/user");
 
 let TABLE_NAME = "";
 let FILE_NAME = "";

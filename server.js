@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const passport = require("passport");
 const companies = require("./routes/companies");
 const services = require("./routes/services");
+const clients = require("./routes/clients");
 const users = require("./routes/users");
 
 const app = express();
@@ -23,5 +24,6 @@ require("./config/passport")(passport);
 app.use("/api", users);
 app.use("/api", companies);
 app.use("/api", services);
+app.use("/api", clients);
 
 app.listen(5000, () => console.log("App is listening on port 5000!"));

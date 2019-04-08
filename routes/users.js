@@ -1,3 +1,4 @@
+/* eslint-disable no-inner-declarations */
 /* eslint-disable eqeqeq */
 
 "use strict";
@@ -9,7 +10,6 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const jwtDecode = require("jwt-decode");
 const { User } = require("../models/user");
 const { client } = require("../models/user");
 const Client = require("../models/client");
@@ -22,6 +22,7 @@ const {
   done
 } = require("../models/order");
 const jwtSecret = require("../config/keys");
+const checkAuth = require("../middleware/checkAuth");
 
 router.post("/signup", async (req, res) => {
   try {
@@ -107,7 +108,7 @@ router.post("/signin", async (req, res) => {
   }
 });
 
-router.get("/user/:id", async (req, res) => {
+router.get("/user/:id", checkAuth, async (req, res) => {
   try {
     const user = await User.findOne({
       where: {
@@ -139,32 +140,25 @@ router.get("/user/:id", async (req, res) => {
   }
 });
 
-router.get("/user/from/token", async (req, res) => {
+router.get("/user/from/token", checkAuth, async (req, res) => {
   try {
-    const token = req.headers["x-access-token"];
-    if (!token) return res.status(401).json({ message: "No token provided." });
-
-    const decoded = jwtDecode(token).id;
-    if (decoded) {
-      const user = await User.findOne({
-        where: {
-          id: decoded
-        }
-      });
-      if (user) {
-        const { id, email, role } = user.dataValues;
-        return res.json({
-          token,
-          user: { id, email, role }
-        });
+    const user = await User.findOne({
+      where: {
+        id: req.id
       }
+    });
+    if (user) {
+      const { id, email, role } = user.dataValues;
+      return res.json({
+        user: { id, email, role }
+      });
     }
   } catch (err) {
     console.log(err);
   }
 });
 
-router.put("/user/:id/edit", async (req, res) => {
+router.put("/user/:id/edit", checkAuth, async (req, res) => {
   try {
     const user = await User.findOne({
       where: {
@@ -246,7 +240,7 @@ router.post("/make_order", async (req, res) => {
   }
 });
 
-router.get("/user/:id/orders", async (req, res) => {
+router.get("/user/:id/orders", checkAuth, async (req, res) => {
   try {
     const user = await User.findOne({
       where: {
@@ -274,12 +268,11 @@ router.get("/user/:id/orders", async (req, res) => {
   }
 });
 
-router.put("/cancel_order", async (req, res) => {
+router.put("/cancel/:orderId", checkAuth, async (req, res) => {
   try {
-    console.log(req.body);
     const order = await Order.findOne({
       where: {
-        id: req.params.id
+        id: req.params.orderId
       }
     });
     if (order) {
@@ -287,7 +280,38 @@ router.put("/cancel_order", async (req, res) => {
       const cancelledOrder = await order.save();
       if (cancelledOrder) {
         return res.json({
-          success: true
+          message: "Order cancelled."
+        });
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.put("/change_status/:orderId", checkAuth, async (req, res) => {
+  try {
+    const order = await Order.findOne({
+      where: {
+        id: req.params.orderId
+      }
+    });
+    if (order) {
+      function switchResult(result) {
+        switch (result) {
+          case ordered:
+            return confirmed;
+          case confirmed:
+            return done;
+          default:
+            return done;
+        }
+      }
+      order.status = switchResult(order.status);
+      const updatedOrderStatus = await order.save();
+      if (updatedOrderStatus) {
+        return res.json({
+          message: "Order status updated."
         });
       }
     }
