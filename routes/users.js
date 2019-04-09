@@ -177,7 +177,6 @@ router.put("/user/:id/edit", checkAuth, async (req, res) => {
     if (userToUpdate) {
       userToUpdate.email = req.body.email;
       const updatedUser = await userToUpdate.save();
-      const { id, role, email } = updatedUser;
       if (updatedUser.role === client) {
         const clientToUpdate = await Client.findOne({
           where: {
@@ -187,10 +186,9 @@ router.put("/user/:id/edit", checkAuth, async (req, res) => {
         if (clientToUpdate) {
           clientToUpdate.name = req.body.name;
           clientToUpdate.address = req.body.address;
-          const updatedClient = await clientToUpdate.save();
+          await clientToUpdate.save();
           return res.json({
-            userData: { id, role, email },
-            additionalUserData: updatedClient
+            message: "User data updated."
           });
         }
       }
@@ -203,10 +201,9 @@ router.put("/user/:id/edit", checkAuth, async (req, res) => {
         companyToUpdate.name = req.body.name;
         companyToUpdate.address = req.body.address;
         companyToUpdate.services = req.body.services;
-        const updatedCompany = await companyToUpdate.save();
+        await companyToUpdate.save();
         return res.json({
-          userData: { id, role, email },
-          additionalUserData: updatedCompany
+          message: "User data updated."
         });
       }
     }
