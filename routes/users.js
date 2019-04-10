@@ -273,12 +273,30 @@ router.put("/cancel/:orderId", checkAuth, async (req, res) => {
       }
     });
     if (order) {
-      order.status = cancelled;
-      const cancelledOrder = await order.save();
-      if (cancelledOrder) {
-        return res.json({
-          message: "Order cancelled."
-        });
+      const client = await User.findOne({
+        where: {
+          client_id: order.client_id
+        }
+      });
+      const company = await User.findOne({
+        where: {
+          company_id: order.company_id
+        }
+      });
+      if (client && company) {
+        if (client.id !== req.id && company.id !== req.id) {
+          res.json({
+            message: "Ooops."
+          });
+        } else {
+          order.status = cancelled;
+          const cancelledOrder = await order.save();
+          if (cancelledOrder) {
+            return res.json({
+              message: "Order cancelled."
+            });
+          }
+        }
       }
     }
   } catch (error) {
@@ -294,22 +312,35 @@ router.put("/change_status/:orderId", checkAuth, async (req, res) => {
       }
     });
     if (order) {
-      function switchResult(result) {
-        switch (result) {
-          case ordered:
-            return confirmed;
-          case confirmed:
-            return done;
-          default:
-            return done;
+      const company = await User.findOne({
+        where: {
+          company_id: order.company_id
         }
-      }
-      order.status = switchResult(order.status);
-      const updatedOrderStatus = await order.save();
-      if (updatedOrderStatus) {
-        return res.json({
-          message: "Order status updated."
-        });
+      });
+      if (company) {
+        if (company.id !== req.id) {
+          res.json({
+            message: "Ooops."
+          });
+        } else {
+          function switchResult(result) {
+            switch (result) {
+              case ordered:
+                return confirmed;
+              case confirmed:
+                return done;
+              default:
+                return done;
+            }
+          }
+          order.status = switchResult(order.status);
+          const updatedOrderStatus = await order.save();
+          if (updatedOrderStatus) {
+            return res.json({
+              message: "Order status updated."
+            });
+          }
+        }
       }
     }
   } catch (error) {

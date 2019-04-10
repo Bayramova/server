@@ -53,9 +53,6 @@ const Order = db.sequelize.define("order", {
     type: Sequelize.STRING,
     defaultValue: "only once"
   },
-  prefix: {
-    type: Sequelize.STRING
-  },
   phone: {
     type: Sequelize.STRING
   },
