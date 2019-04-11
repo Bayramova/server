@@ -9,7 +9,6 @@ const path = require("path");
 const db = require("../config/database");
 const Company = require("../models/company");
 const Service = require("../models/service");
-const Client = require("../models/client");
 const { User } = require("../models/user");
 
 let TABLE_NAME = "";

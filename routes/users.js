@@ -21,6 +21,7 @@ const {
   cancelled,
   done
 } = require("../models/order");
+const Feedback = require("../models/feedback");
 const jwtSecret = require("../config/keys");
 const checkAuth = require("../middleware/checkAuth");
 
@@ -230,7 +231,16 @@ router.post("/make_order", async (req, res) => {
       company_id: req.body.companyId
     });
     if (newOrder) {
-      res.json(newOrder);
+      const company = await Company.findOne({
+        where: {
+          id: newOrder.company_id
+        }
+      });
+      if (company) {
+        company.ordersNumber += 1;
+        company.save();
+        res.json(newOrder);
+      }
     }
   } catch (error) {
     console.error(error);
@@ -292,9 +302,18 @@ router.put("/cancel/:orderId", checkAuth, async (req, res) => {
           order.status = cancelled;
           const cancelledOrder = await order.save();
           if (cancelledOrder) {
-            return res.json({
-              message: "Order cancelled."
+            const company = await Company.findOne({
+              where: {
+                id: cancelledOrder.company_id
+              }
             });
+            if (company) {
+              company.ordersNumber -= 1;
+              company.save();
+              return res.json({
+                message: "Order cancelled."
+              });
+            }
           }
         }
       }
@@ -345,6 +364,55 @@ router.put("/change_status/:orderId", checkAuth, async (req, res) => {
     }
   } catch (error) {
     console.log(error);
+  }
+});
+
+router.post("/leave_feedback", checkAuth, async (req, res) => {
+  try {
+    const newFeedback = await Feedback.create({
+      rate: req.body.rate,
+      feedback: req.body.feedback,
+      client_id: req.body.clientId,
+      company_id: req.body.companyId
+    });
+    if (newFeedback) {
+      const company = await Company.findOne({
+        where: {
+          id: newFeedback.company_id
+        }
+      });
+      if (company) {
+        if (company.rating === null) {
+          company.rating += newFeedback.rate;
+        } else {
+          company.rating = (company.rating + newFeedback.rate) / 2;
+        }
+        company.save();
+        res.json(newFeedback);
+      }
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+router.get("/company/:id/feedbacks", async (req, res) => {
+  try {
+    const company = await Company.findOne({
+      where: {
+        id: req.params.id
+      }
+    });
+    if (company) {
+      const feedbacks = await Feedback.findAll({
+        where: {
+          company_id: company.id
+        }
+      });
+      return res.json(feedbacks);
+    }
+  } catch (err) {
+    console.log(`Error: ${err}`);
   }
 });
 
