@@ -5,6 +5,7 @@ const db = require("../config/database");
 const Company = require("../models/company");
 const Client = require("../models/client");
 
+// TODO константы обычно называются большими буквами CLIENT = "CLIENT"
 const client = "client";
 const company = "company";
 const admin = "admin";
