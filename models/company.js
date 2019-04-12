@@ -2,7 +2,6 @@
 
 const Sequelize = require("sequelize");
 const { Order } = require("./order");
-const Feedback = require("./feedback");
 const db = require("../config/database");
 
 const Company = db.sequelize.define(
@@ -46,13 +45,6 @@ const Company = db.sequelize.define(
 );
 
 Company.hasMany(Order, {
-  foreignKey: "company_id",
-  sourceKey: "id",
-  allowNull: true,
-  defaultValue: null
-});
-
-Company.hasMany(Feedback, {
   foreignKey: "company_id",
   sourceKey: "id",
   allowNull: true,

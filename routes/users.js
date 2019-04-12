@@ -15,13 +15,14 @@ const { client } = require("../models/user");
 const Client = require("../models/client");
 const Company = require("../models/company");
 const {
+  Feedback,
   Order,
   ordered,
   confirmed,
   cancelled,
   done
 } = require("../models/order");
-const Feedback = require("../models/feedback");
+// const Feedback = require("../models/feedback");
 const jwtSecret = require("../config/keys");
 const checkAuth = require("../middleware/checkAuth");
 
@@ -372,23 +373,44 @@ router.post("/leave_feedback", checkAuth, async (req, res) => {
     const newFeedback = await Feedback.create({
       rate: req.body.rate,
       feedback: req.body.feedback,
-      client_id: req.body.clientId,
-      company_id: req.body.companyId
+      order_id: req.body.orderId
     });
     if (newFeedback) {
-      const company = await Company.findOne({
+      const order = await Order.findOne({
         where: {
-          id: newFeedback.company_id
+          id: newFeedback.order_id
         }
       });
-      if (company) {
-        if (company.rating === null) {
-          company.rating += newFeedback.rate;
-        } else {
-          company.rating = (company.rating + newFeedback.rate) / 2;
+      if (order) {
+        const client = await User.findOne({
+          where: {
+            client_id: order.client_id
+          }
+        });
+        if (client) {
+          if (client.id !== req.id) {
+            res.json({
+              message: "Ooops."
+            });
+          } else {
+            const company = await Company.findOne({
+              where: {
+                id: order.company_id
+              }
+            });
+            if (company) {
+              if (company.rating === null) {
+                company.rating = newFeedback.rate;
+              } else {
+                company.rating = (company.rating + newFeedback.rate) / 2;
+              }
+              company.save();
+              order.feedbackLeft = true;
+              order.save();
+              res.json(newFeedback);
+            }
+          }
         }
-        company.save();
-        res.json(newFeedback);
       }
     }
   } catch (error) {
@@ -405,9 +427,14 @@ router.get("/company/:id/feedbacks", async (req, res) => {
     });
     if (company) {
       const feedbacks = await Feedback.findAll({
-        where: {
-          company_id: company.id
-        }
+        include: [
+          {
+            model: Order,
+            where: {
+              company_id: company.id
+            }
+          }
+        ]
       });
       return res.json(feedbacks);
     }

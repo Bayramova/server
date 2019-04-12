@@ -58,7 +58,31 @@ const Order = db.sequelize.define("order", {
   },
   cost: {
     type: Sequelize.INTEGER
+  },
+  feedbackLeft: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 });
 
-module.exports = { Order, ordered, confirmed, cancelled, done };
+const Feedback = db.sequelize.define("feedback", {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  rate: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
+  feedback: {
+    type: Sequelize.STRING
+  }
+});
+
+Feedback.belongsTo(Order, {
+  foreignKey: "order_id",
+  targetKey: "id"
+});
+
+module.exports = { Feedback, Order, ordered, confirmed, cancelled, done };

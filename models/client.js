@@ -2,7 +2,6 @@
 
 const Sequelize = require("sequelize");
 const { Order } = require("./order");
-const Feedback = require("./feedback");
 const db = require("../config/database");
 
 const Client = db.sequelize.define("client", {
@@ -20,13 +19,6 @@ const Client = db.sequelize.define("client", {
 });
 
 Client.hasMany(Order, {
-  foreignKey: "client_id",
-  sourceKey: "id",
-  allowNull: true,
-  defaultValue: null
-});
-
-Client.hasMany(Feedback, {
   foreignKey: "client_id",
   sourceKey: "id",
   allowNull: true,
