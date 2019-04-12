@@ -26,6 +26,7 @@ const jwtSecret = require("../config/keys");
 const checkAuth = require("../middleware/checkAuth");
 
 router.post("/signup", async (req, res) => {
+  // TODO бизнес логика должна быть не в роутах, а в сервисах(между моделями и роутами, должен быть слой сервисов)
   try {
     const user = await User.findOne({
       where: {
@@ -68,6 +69,7 @@ router.post("/signup", async (req, res) => {
     newUser.password = hash;
     const registeredUser = newUser.save();
     if (registeredUser) {
+      // TODO ты тут случайно пароль на фронт не отправляешь?
       res.json(registeredUser);
     }
   } catch (error) {
@@ -338,10 +340,12 @@ router.put("/change_status/:orderId", checkAuth, async (req, res) => {
       });
       if (company) {
         if (company.id !== req.id) {
+          // TODO информативно) и тут наверно стоило бы другой http код отправить 403 или 422
           res.json({
             message: "Ooops."
           });
         } else {
+          // TODO стоит вынести ф-цию из роута
           function switchResult(result) {
             switch (result) {
               case ordered:
@@ -385,6 +389,7 @@ router.post("/leave_feedback", checkAuth, async (req, res) => {
         if (company.rating === null) {
           company.rating += newFeedback.rate;
         } else {
+          // TODO 10 человек поставит 5, а потом 1, в срелнем будет 2.5. не надо менять, просто наблюдение)
           company.rating = (company.rating + newFeedback.rate) / 2;
         }
         company.save();
