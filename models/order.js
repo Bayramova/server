@@ -3,10 +3,10 @@
 const Sequelize = require("sequelize");
 const db = require("../config/database");
 
-const ordered = "new";
-const confirmed = "confirmed";
-const cancelled = "cancelled";
-const done = "done";
+const NEW = "NEW";
+const CONFIRMED = "CONFIRMED";
+const CANCELLED = "CANCELLED";
+const DONE = "DONE";
 
 const Order = db.sequelize.define("order", {
   id: {
@@ -15,8 +15,8 @@ const Order = db.sequelize.define("order", {
     autoIncrement: true
   },
   status: {
-    type: Sequelize.ENUM(ordered, confirmed, cancelled, done),
-    defaultValue: ordered
+    type: Sequelize.ENUM(NEW, CONFIRMED, CANCELLED, DONE),
+    defaultValue: NEW
   },
   address: {
     type: Sequelize.STRING
@@ -85,4 +85,4 @@ Feedback.belongsTo(Order, {
   targetKey: "id"
 });
 
-module.exports = { Feedback, Order, ordered, confirmed, cancelled, done };
+module.exports = { Feedback, Order, NEW, CONFIRMED, CANCELLED, DONE };

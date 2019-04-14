@@ -10,6 +10,9 @@ router.get("/services", async (req, res) => {
     const services = await Service.findAll();
     res.json(services);
   } catch (err) {
+    res.status(500).json({
+      message: "Something went wrong."
+    });
     console.log(`Error: ${err}`);
   }
 });

@@ -10,7 +10,9 @@ router.get("/clients", async (req, res) => {
     const clients = await Client.findAll();
     res.json(clients);
   } catch (err) {
-    // TODO надо возвращать ошибку клиенту
+    res.status(500).json({
+      message: "Something went wrong."
+    });
     console.log(`Error: ${err}`);
   }
 });

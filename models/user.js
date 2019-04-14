@@ -5,10 +5,9 @@ const db = require("../config/database");
 const Company = require("../models/company");
 const Client = require("../models/client");
 
-// TODO константы обычно называются большими буквами CLIENT = "CLIENT"
-const client = "client";
-const company = "company";
-const admin = "admin";
+const CLIENT = "CLIENT";
+const COMPANY = "COMPANY";
+const ADMIN = "ADMIN";
 
 const User = db.sequelize.define("user", {
   id: {
@@ -17,8 +16,8 @@ const User = db.sequelize.define("user", {
     autoIncrement: true
   },
   role: {
-    type: Sequelize.ENUM(client, company, admin),
-    defaultValue: client
+    type: Sequelize.ENUM(CLIENT, COMPANY, ADMIN),
+    defaultValue: CLIENT
   },
   email: {
     type: Sequelize.STRING,
@@ -45,4 +44,4 @@ User.belongsTo(Company, {
   defaultValue: null
 });
 
-module.exports = { User, client, company };
+module.exports = { User, CLIENT, COMPANY };
