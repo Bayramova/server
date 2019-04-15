@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "lint": "eslint --fix . --ext .js",
-    "data": "node scripts/import --table=services --filename=services.json && node scripts/import --table=companies --filename=companies.json && node scripts/import --table=clients --filename=clients.json && node scripts/import --table=users --filename=users.json"
+    "data": "node scripts/import --table=Service --filename=services.json && node scripts/import --table=Company --filename=companies.json && node scripts/import --table=Client --filename=clients.json && node scripts/import --table=User --filename=users.json"
   },
   "keywords": [],
   "author": "",

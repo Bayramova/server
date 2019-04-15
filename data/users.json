@@ -142,11 +142,5 @@
     "email": "qwertyqwq@gmail.com",
     "password": "$2y$10$kvezqQTPf5PSR7ZAaBsXhupEt5iVE9/CLLkgxjh9eIME/ptkGKskC",
     "company_id": "24"
-  },
-  {
-    "email": "vasyapupkin@gmail.com",
-    "password": "$2y$10$1tcuKaFrsQegUtQrwLhFc.01qo8BXT/S/SBIyEhXVszUj/2FEbW/S",
-    "role": "client",
-    "client_id": "1"
   }
 ]

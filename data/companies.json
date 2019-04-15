@@ -4,7 +4,7 @@
     "name": "Fresh Perspectives",
     "address": "1600 Pennsylvania Avenue, Washington",
     "rating": "4",
-    "orders": "50",
+    "ordersNumber": "50",
     "services": ["standardcleaning", "generalcleaning", "repaircleaning"],
     "reviewsNumber": "25"
   },
@@ -13,7 +13,7 @@
     "name": "Uborka Kvartir",
     "address": "11 Wall Street New York, NY",
     "rating": "5",
-    "orders": "30",
+    "ordersNumber": "30",
     "services": ["standardcleaning", "officecleaning", "furniturecleaning"],
     "reviewsNumber": "25"
   },
@@ -22,7 +22,7 @@
     "name": "Sparkling Palaces",
     "address": "350 Fifth Avenue New York, NY",
     "rating": "4",
-    "orders": "77",
+    "ordersNumber": "77",
     "services": ["industrialcleaning", "poolcleaning", "officecleaning"],
     "reviewsNumber": "30"
   },
@@ -31,7 +31,7 @@
     "name": "House Cleaners",
     "address": "221 B Baker St, London",
     "rating": "3",
-    "orders": "15",
+    "ordersNumber": "15",
     "services": [
       "standardcleaning",
       "generalcleaning",
@@ -45,7 +45,7 @@
     "name": "Roga&Kopyta",
     "address": "Tour Eiffel Champ de Mars, Paris",
     "rating": "5",
-    "orders": "32",
+    "ordersNumber": "32",
     "services": [
       "standardcleaning",
       "generalcleaning",
@@ -63,7 +63,7 @@
     "name": "Cowboys Cleaning",
     "address": "4059 Mt Lee Dr. Hollywood, CA",
     "rating": "4",
-    "orders": "30",
+    "ordersNumber": "30",
     "services": ["carpetcleaning", "furniturecleaning"],
     "reviewsNumber": "25"
   },
@@ -72,7 +72,7 @@
     "name": "RamClean Cleaning Services",
     "address": "Buckingham Palace, London",
     "rating": "3",
-    "orders": "10",
+    "ordersNumber": "10",
     "services": ["repaircleaning", "industrialcleaning"],
     "reviewsNumber": "25"
   },
@@ -81,7 +81,7 @@
     "name": "Stormy's Cleaning Service",
     "address": "Statue of Liberty, Liberty Island New York, NY",
     "rating": "3",
-    "orders": "70",
+    "ordersNumber": "70",
     "services": [
       "standardcleaning",
       "generalcleaning",
@@ -95,7 +95,7 @@
     "name": "A&A Cleaning Services",
     "address": "Manager Square, Bethlehem, West Bank",
     "rating": "4",
-    "orders": "66",
+    "ordersNumber": "66",
     "services": ["standardcleaning", "poolcleaning"],
     "reviewsNumber": "25"
   },
@@ -104,7 +104,7 @@
     "name": "GoClean",
     "address": "2 Macquarie Street, Sydney",
     "rating": "5",
-    "orders": "85",
+    "ordersNumber": "85",
     "services": ["repaircleaning", "generalcleaning"],
     "reviewsNumber": "25"
   },
@@ -113,7 +113,7 @@
     "name": "Chrisparkle Cleaning Services",
     "address": "99, rue de Rivoli, Paris",
     "rating": "4",
-    "orders": "20",
+    "ordersNumber": "20",
     "services": ["standardcleaning", "generalcleaning", "poolcleaning"],
     "reviewsNumber": "25"
   },
@@ -122,7 +122,7 @@
     "name": "Chistogoliki",
     "address": "Piazza della Scala, Milano",
     "rating": "3",
-    "orders": "60",
+    "ordersNumber": "60",
     "services": [
       "standardcleaning",
       "generalcleaning",
@@ -136,7 +136,7 @@
     "name": "Gryazi net",
     "address": "263 Prinsengracht, Amsterdam",
     "rating": "3",
-    "orders": "10",
+    "ordersNumber": "10",
     "services": [
       "standardcleaning",
       "generalcleaning",
@@ -150,7 +150,7 @@
     "name": "Blesk",
     "address": "1060 West Addison Street, Chigaco",
     "rating": "5",
-    "orders": "20",
+    "ordersNumber": "20",
     "services": [
       "standardcleaning",
       "generalcleaning",
@@ -165,7 +165,7 @@
     "name": "City Cleaning",
     "address": "10 Downing Street, London",
     "rating": "4",
-    "orders": "30",
+    "ordersNumber": "30",
     "services": ["repaircleaning", "officecleaning", "industrialcleaning"],
     "reviewsNumber": "25"
   },
@@ -174,7 +174,7 @@
     "name": "Merry Maids",
     "address": "30 Rockefeller Plaza, Manhattan, NY",
     "rating": "4",
-    "orders": "40",
+    "ordersNumber": "40",
     "services": [
       "standardcleaning",
       "generalcleaning",
@@ -192,7 +192,7 @@
     "name": "Molly Maid",
     "address": "6925 Hollywood Boulevard, Hollywood, CA",
     "rating": "5",
-    "orders": "50",
+    "ordersNumber": "50",
     "services": [
       "standardcleaning",
       "generalcleaning",
@@ -210,7 +210,7 @@
     "name": "Fresh Carpet",
     "address": "Off A344 Road, Amesbury, Wiltshire",
     "rating": "5",
-    "orders": "60",
+    "ordersNumber": "60",
     "services": ["carpetcleaning", "furniturecleaning"],
     "reviewsNumber": "25"
   },
@@ -219,7 +219,7 @@
     "name": "Krasniy Uborshik",
     "address": "Red Square, Moscow",
     "rating": "3",
-    "orders": "70",
+    "ordersNumber": "70",
     "services": ["officecleaning", "standardcleaning"],
     "reviewsNumber": "25"
   },
@@ -228,7 +228,7 @@
     "name": "Wendi's Cleaning Service",
     "address": "Number 4, Privet Drive, Little Whinging",
     "rating": "4",
-    "orders": "80",
+    "ordersNumber": "80",
     "services": ["standardcleaning", "generalcleaning"],
     "reviewsNumber": "25"
   },
@@ -237,7 +237,7 @@
     "name": "Residential Cleaning Service",
     "address": "42 Wallaby Way, Sydney",
     "rating": "3",
-    "orders": "30",
+    "ordersNumber": "30",
     "services": ["officecleaning"],
     "reviewsNumber": "25"
   },
@@ -246,7 +246,7 @@
     "name": "Horns&Hooves",
     "address": "11 Derby Street, Nawton",
     "rating": "4",
-    "orders": "90",
+    "ordersNumber": "90",
     "services": ["carpetcleaning", "furniturecleaning", "poolcleaning"],
     "reviewsNumber": "25"
   },
@@ -255,7 +255,7 @@
     "name": "Heh&Hah",
     "address": "ul. Tolstogo 10, Minsk",
     "rating": "5",
-    "orders": "35",
+    "ordersNumber": "35",
     "services": ["repaircleaning", "industrialcleaning", "poolcleaning"],
     "reviewsNumber": "25"
   },
@@ -264,7 +264,7 @@
     "name": "Fish",
     "address": "ul. Platonova 10, Minsk",
     "rating": "4",
-    "orders": "40",
+    "ordersNumber": "40",
     "services": ["repaircleaning", "industrialcleaning", "poolcleaning"],
     "reviewsNumber": "25"
   }
