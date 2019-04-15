@@ -52,12 +52,12 @@ router.get("/user/:id/orders", checkAuth, async (req, res) => {
 });
 
 router.put("/cancel/:orderId", checkAuth, async (req, res) => {
-  const response = await cancelOrder(req.params.orderId, res);
+  const response = await cancelOrder(req.params, req.id, res);
   res.json(response);
 });
 
 router.put("/change_status/:orderId", checkAuth, async (req, res) => {
-  const response = await changeOrderStatus(req.params.orderId, res);
+  const response = await changeOrderStatus(req.params, req.id, res);
   res.json(response);
 });
 

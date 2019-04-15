@@ -83,11 +83,11 @@ const getOrders = async id => {
   }
 };
 
-const cancelOrder = async (id, res) => {
+const cancelOrder = async (params, id, res) => {
   try {
     const order = await Order.findOne({
       where: {
-        id
+        id: params.orderId
       }
     });
     if (order) {
@@ -132,11 +132,11 @@ const cancelOrder = async (id, res) => {
   }
 };
 
-const changeOrderStatus = async (id, res) => {
+const changeOrderStatus = async (params, id, res) => {
   try {
     const order = await Order.findOne({
       where: {
-        id
+        id: params.orderId
       }
     });
     if (order) {
