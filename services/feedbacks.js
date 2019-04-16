@@ -43,6 +43,7 @@ const leaveFeedback = async (id, data, res) => {
               } else {
                 company.rating = (company.rating + newFeedback.rate) / 2;
               }
+              company.reviewsNumber += 1;
               company.save();
               order.feedbackLeft = true;
               order.save();

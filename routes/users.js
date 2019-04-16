@@ -15,6 +15,7 @@ const {
   changeOrderStatus
 } = require("../services/orders");
 const { leaveFeedback, getFeedbacks } = require("../services/feedbacks");
+const { search } = require("../services/search");
 
 router.post("/signup", async (req, res) => {
   const response = await signUp(req.body, res);
@@ -68,6 +69,11 @@ router.post("/leave_feedback", checkAuth, async (req, res) => {
 
 router.get("/company/:id/feedbacks", async (req, res) => {
   const response = await getFeedbacks(req.params.id);
+  res.json(response);
+});
+
+router.get("/search", async (req, res) => {
+  const response = await search(req.query.q, res);
   res.json(response);
 });
 
