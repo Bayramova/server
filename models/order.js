@@ -56,6 +56,9 @@ const Order = db.sequelize.define("order", {
   phone: {
     type: Sequelize.STRING
   },
+  name: {
+    type: Sequelize.STRING
+  },
   cost: {
     type: Sequelize.INTEGER
   },

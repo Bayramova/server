@@ -32,6 +32,7 @@ const makeOrder = async data => {
       cleaningFrequency: data.cleaningFrequency,
       prefix: data.prefix,
       phone: data.phone,
+      name: data.name,
       cost: data.cost,
       client_id: data.clientId,
       company_id: data.companyId
@@ -62,20 +63,38 @@ const getOrders = async id => {
       }
     });
     if (user) {
-      if (user.role === CLIENT) {
-        const orders = await Order.findAll({
-          where: {
-            client_id: user.client_id
-          }
-        });
-        return orders;
-      }
-      const orders = await Order.findAll({
-        where: {
-          company_id: user.company_id
+      const orders =
+        user.role === CLIENT
+          ? await Order.findAll({
+              where: {
+                client_id: user.client_id
+              }
+            })
+          : await Order.findAll({
+              where: {
+                company_id: user.company_id
+              }
+            });
+      if (orders) {
+        const ordersInfo = await Promise.all(
+          orders.map(async order => {
+            const company = await Company.findOne({
+              where: {
+                id: order.company_id
+              }
+            });
+            if (company) {
+              return {
+                ...order.dataValues,
+                company_name: company.name
+              };
+            }
+          })
+        );
+        if (ordersInfo) {
+          return ordersInfo;
         }
-      });
-      return orders;
+      }
     }
   } catch (err) {
     console.log(`Error: ${err}`);

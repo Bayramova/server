@@ -29,4 +29,22 @@ router.get("/companies/:page", async (req, res) => {
   }
 });
 
+router.get("/company/:id", async (req, res) => {
+  try {
+    const company = await Company.findOne({
+      where: {
+        id: req.params.id
+      }
+    });
+    if (company) {
+      res.json(company);
+    }
+  } catch (err) {
+    res.status(500).json({
+      message: "Something went wrong."
+    });
+    console.log(`Error: ${err}`);
+  }
+});
+
 module.exports = router;
