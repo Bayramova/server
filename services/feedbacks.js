@@ -77,7 +77,9 @@ const getFeedbacks = async id => {
           }
         ]
       });
-      return feedbacks;
+      if (feedbacks) {
+        return feedbacks;
+      }
     }
   } catch (err) {
     console.log(`Error: ${err}`);

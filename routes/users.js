@@ -72,8 +72,8 @@ router.get("/company/:id/feedbacks", async (req, res) => {
   res.json(response);
 });
 
-router.get("/search", async (req, res) => {
-  const response = await search(req.query.q, res);
+router.get("/search/:page/:limit", async (req, res) => {
+  const response = await search(req.query.q, req.params, res);
   res.json(response);
 });
 

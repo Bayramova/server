@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-globals */
+
 "use strict";
 
 const express = require("express");
@@ -5,20 +7,33 @@ const express = require("express");
 const router = express.Router();
 const Company = require("../models/company");
 
-router.get("/companies/:page", async (req, res) => {
+router.get("/companies/:page/:limit", async (req, res) => {
   try {
-    const limit = 5;
+    const page = req.params.page || 1;
+    let limit = parseInt(req.params.limit, 10);
+    if (isNaN(limit)) {
+      limit = 5;
+    } else if (limit > 50) {
+      limit = 50;
+    } else if (limit < 1) {
+      limit = 1;
+    }
     let offset = 0;
     const data = await Company.findAndCountAll();
     if (data) {
-      const { page } = req.params;
       offset = limit * (page - 1);
       const companies = await Company.findAll({
         limit,
         offset
       });
       if (companies) {
-        res.json(companies);
+        const hasMore = page < Math.ceil(data.count / limit);
+        res.json({
+          companies,
+          currentPage: page,
+          pages: Math.ceil(data.count / limit),
+          hasMore
+        });
       }
     }
   } catch (err) {

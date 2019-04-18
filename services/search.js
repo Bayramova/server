@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable consistent-return */
 /* eslint-disable no-shadow */
 
 "use strict";
@@ -5,20 +7,45 @@
 const Company = require("../models/company");
 const Service = require("../models/service");
 
-const search = async (query, res) => {
+const search = async (query, params, res) => {
   try {
-    const companies = await Company.findAll();
-    const services = await Service.findAll();
-    const service = services.find(service =>
-      service.title.toLowerCase().includes(query)
-    );
-    const serviceId = service ? service.id : "";
-    const filtered = companies.filter(
-      company =>
-        company.name.toLowerCase().includes(query) ||
-        company.services.includes(serviceId)
-    );
-    return filtered;
+    const page = params.page || 1;
+    let limit = parseInt(params.limit, 10);
+    if (isNaN(limit)) {
+      limit = 5;
+    } else if (limit > 50) {
+      limit = 50;
+    } else if (limit < 1) {
+      limit = 1;
+    }
+    // let offset = 0;
+    const data = await Company.findAll();
+    if (data) {
+      const services = await Service.findAll();
+      if (services) {
+        const service = services.find(service =>
+          service.title.toLowerCase().includes(query)
+        );
+        const serviceId = service ? service.id : "";
+        const filtered = data.filter(
+          company =>
+            company.name.toLowerCase().includes(query) ||
+            company.services.includes(serviceId)
+        );
+        // offset = limit * (page - 1);
+        const companies = filtered.slice(
+          limit * (page - 1),
+          limit * (page - 1) + limit
+        );
+        const hasMore = page < Math.ceil(filtered.length / limit);
+        return {
+          companies,
+          currentPage: page,
+          pages: Math.ceil(filtered.length / limit),
+          hasMore
+        };
+      }
+    }
   } catch (err) {
     console.log(`Error: ${err}`);
     return res.status(500).json({
