@@ -18,7 +18,7 @@ const search = async (query, params, res) => {
     } else if (limit < 1) {
       limit = 1;
     }
-    // let offset = 0;
+
     const data = await Company.findAll();
     if (data) {
       const services = await Service.findAll();
@@ -32,7 +32,6 @@ const search = async (query, params, res) => {
             company.name.toLowerCase().includes(query) ||
             company.services.includes(serviceId)
         );
-        // offset = limit * (page - 1);
         const companies = filtered.slice(
           limit * (page - 1),
           limit * (page - 1) + limit
@@ -40,8 +39,6 @@ const search = async (query, params, res) => {
         const hasMore = page < Math.ceil(filtered.length / limit);
         return {
           companies,
-          currentPage: page,
-          pages: Math.ceil(filtered.length / limit),
           hasMore
         };
       }

@@ -30,8 +30,6 @@ router.get("/companies/:page/:limit", async (req, res) => {
         const hasMore = page < Math.ceil(data.count / limit);
         res.json({
           companies,
-          currentPage: page,
-          pages: Math.ceil(data.count / limit),
           hasMore
         });
       }
