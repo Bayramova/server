@@ -72,6 +72,7 @@ router.get("/company/:id/feedbacks", async (req, res) => {
   res.json(response);
 });
 
+// TODO поиск возвращает компании. но он в роуте про юзеров. и По url не скажешь что это за поиск.
 router.get("/search/:page/:limit", async (req, res) => {
   const response = await search(req.query.q, req.params, res);
   res.json(response);

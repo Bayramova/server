@@ -104,6 +104,7 @@ const getOrders = async id => {
 
 const cancelOrder = async (params, id, res) => {
   try {
+    // TODO 3 запроса можно поменять на один с использовнием include. Вообще sql join мощная штука, почитай про него
     const order = await Order.findOne({
       where: {
         id: params.orderId

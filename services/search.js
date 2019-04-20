@@ -19,6 +19,9 @@ const search = async (query, params, res) => {
       limit = 1;
     }
 
+    // TODO представь что у тебя 100000 компаний и сервисов. Какова будет нагрузка на сервер
+    // старайся делать поиск и фильртацию с помощью sql, ну или в твоём случае siqualize
+    // это критично
     const data = await Company.findAll();
     if (data) {
       const services = await Service.findAll();

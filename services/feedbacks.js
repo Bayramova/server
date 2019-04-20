@@ -15,6 +15,8 @@ const leaveFeedback = async (id, data, res) => {
       order_id: data.orderId
     });
     if (newFeedback) {
+      // TODO попробуй использовать include http://docs.sequelizejs.com/manual/models-usage.html#eager-loading
+      // user можно запросить с order с помощью sql join
       const order = await Order.findOne({
         where: {
           id: newFeedback.order_id
@@ -41,6 +43,8 @@ const leaveFeedback = async (id, data, res) => {
               if (company.rating === null) {
                 company.rating = newFeedback.rate;
               } else {
+                // с такой логикой новыое ревью будет значить столько же, сколько все старые вместе. Правильно?
+                // т.е. 5 раз оценка 4, потом одна  оценка 1, в итоге 2.5 Это ожидаемое поведение?
                 company.rating = (company.rating + newFeedback.rate) / 2;
               }
               company.reviewsNumber += 1;
@@ -61,6 +65,7 @@ const leaveFeedback = async (id, data, res) => {
 
 const getFeedbacks = async id => {
   try {
+    // TODO сделай за один запрос с помощью include
     const company = await Company.findOne({
       where: {
         id

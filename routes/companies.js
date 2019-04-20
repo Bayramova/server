@@ -19,6 +19,8 @@ router.get("/companies/:page/:limit", async (req, res) => {
       limit = 1;
     }
     let offset = 0;
+    // TODO это уже логика сервиса. роутер не должен импортить модели
+    // Нужны ли тут 2 запроса? Попробуй сделать всё за один запрос.
     const data = await Company.findAndCountAll();
     if (data) {
       offset = limit * (page - 1);
