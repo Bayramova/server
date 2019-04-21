@@ -15,7 +15,6 @@ const {
   changeOrderStatus
 } = require("../services/orders");
 const { leaveFeedback, getFeedbacks } = require("../services/feedbacks");
-const { search } = require("../services/search");
 
 router.post("/signup", async (req, res) => {
   const response = await signUp(req.body, res);
@@ -69,12 +68,6 @@ router.post("/leave_feedback", checkAuth, async (req, res) => {
 
 router.get("/company/:id/feedbacks", async (req, res) => {
   const response = await getFeedbacks(req.params.id);
-  res.json(response);
-});
-
-// TODO поиск возвращает компании. но он в роуте про юзеров. и По url не скажешь что это за поиск.
-router.get("/search/:page/:limit", async (req, res) => {
-  const response = await search(req.query.q, req.params, res);
   res.json(response);
 });
 

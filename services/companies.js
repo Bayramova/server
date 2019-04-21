@@ -1,13 +1,64 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable consistent-return */
-/* eslint-disable no-shadow */
 
 "use strict";
 
 const Company = require("../models/company");
 const Service = require("../models/service");
 
-const search = async (query, params, res) => {
+const getCompanies = async (params, res) => {
+  try {
+    const page = params.page || 1;
+    let limit = parseInt(params.limit, 10);
+    if (isNaN(limit)) {
+      limit = 5;
+    } else if (limit > 50) {
+      limit = 50;
+    } else if (limit < 1) {
+      limit = 1;
+    }
+    let offset = 0;
+    const data = await Company.findAndCountAll();
+    if (data) {
+      offset = limit * (page - 1);
+      const companies = await Company.findAll({
+        limit,
+        offset
+      });
+      if (companies) {
+        const hasMore = page < Math.ceil(data.count / limit);
+        return {
+          companies,
+          hasMore
+        };
+      }
+    }
+  } catch (err) {
+    return res.status(500).json({
+      message: "Something went wrong."
+    });
+  }
+};
+
+const getCompany = async (params, res) => {
+  try {
+    const company = await Company.findOne({
+      where: {
+        id: params.id
+      }
+    });
+    if (company) {
+      return company;
+    }
+  } catch (err) {
+    return res.status(500).json({
+      message: "Something went wrong."
+    });
+  }
+};
+
+const searchCompanies = async (query, params, res) => {
   try {
     const page = params.page || 1;
     let limit = parseInt(params.limit, 10);
@@ -54,4 +105,4 @@ const search = async (query, params, res) => {
   }
 };
 
-module.exports = { search };
+module.exports = { getCompanies, getCompany, searchCompanies };
