@@ -4,8 +4,8 @@
 
 "use strict";
 
+const Sequelize = require("sequelize");
 const Company = require("../models/company");
-const Service = require("../models/service");
 
 const getCompanies = async (params, res) => {
   try {
@@ -69,30 +69,30 @@ const searchCompanies = async (query, params, res) => {
     } else if (limit < 1) {
       limit = 1;
     }
-    const data = await Company.findAll();
-    if (data) {
-      const services = await Service.findAll();
-      if (services) {
-        const service = services.find(service =>
-          service.title.toLowerCase().includes(query)
-        );
-        const serviceId = service ? service.id : "";
-        const filtered = data.filter(
-          company =>
-            company.name.toLowerCase().includes(query) ||
-            company.services.includes(serviceId)
-        );
-        const companies = filtered.slice(
-          limit * (page - 1),
-          limit * (page - 1) + limit
-        );
-        const hasMore = page < Math.ceil(filtered.length / limit);
-        return {
-          companies,
-          hasMore
-        };
+    const filteredByName = Company.findAll({
+      where: {
+        name: {
+          [Sequelize.Op.substring]: query
+        }
       }
-    }
+    });
+    const filteredByService = Company.findAll({
+      where: {
+        services: {
+          [Sequelize.Op.substring]: query
+        }
+      }
+    });
+    const filtered = [...filteredByName, ...filteredByService];
+    const companies = filtered.slice(
+      limit * (page - 1),
+      limit * (page - 1) + limit
+    );
+    const hasMore = page < Math.ceil(filtered.length / limit);
+    return {
+      companies,
+      hasMore
+    };
   } catch (err) {
     console.log(`Error: ${err}`);
     return res.status(500).json({
