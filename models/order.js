@@ -2,6 +2,8 @@
 
 const Sequelize = require("sequelize");
 const db = require("../config/database");
+const Client = require("../models/client");
+const Company = require("../models/company");
 
 const NEW = "NEW";
 const CONFIRMED = "CONFIRMED";
@@ -66,6 +68,20 @@ const Order = db.sequelize.define("order", {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   }
+});
+
+Order.belongsTo(Client, {
+  foreignKey: "client_id",
+  targetKey: "id",
+  allowNull: true,
+  defaultValue: null
+});
+
+Order.belongsTo(Company, {
+  foreignKey: "company_id",
+  targetKey: "id",
+  allowNull: true,
+  defaultValue: null
 });
 
 const Feedback = db.sequelize.define("feedback", {

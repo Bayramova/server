@@ -30,14 +30,14 @@ const User = db.sequelize.define("user", {
   }
 });
 
-User.belongsTo(Client, {
+Client.hasOne(User, {
   foreignKey: "client_id",
   targetKey: "id",
   allowNull: true,
   defaultValue: null
 });
 
-User.belongsTo(Company, {
+Company.hasOne(User, {
   foreignKey: "company_id",
   targetKey: "id",
   allowNull: true,

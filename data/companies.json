@@ -6,16 +6,16 @@
     "rating": "4",
     "ordersNumber": "50",
     "services": ["standardcleaning", "generalcleaning", "repaircleaning"],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/bath-solid.svg",
     "name": "Uborka Kvartir",
     "address": "11 Wall Street New York, NY",
     "rating": "5",
-    "ordersNumber": "30",
+    "ordersNumber": "1",
     "services": ["standardcleaning", "officecleaning", "furniturecleaning"],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/candy-cane-solid.svg",
@@ -24,7 +24,7 @@
     "rating": "4",
     "ordersNumber": "77",
     "services": ["industrialcleaning", "poolcleaning", "officecleaning"],
-    "reviewsNumber": "30"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/cat-solid.svg",
@@ -38,7 +38,7 @@
       "carpetcleaning",
       "furniturecleaning"
     ],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/frog-solid.svg",
@@ -56,16 +56,16 @@
       "industrialcleaning",
       "poolcleaning"
     ],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/ghost-solid.svg",
     "name": "Cowboys Cleaning",
     "address": "4059 Mt Lee Dr. Hollywood, CA",
     "rating": "4",
-    "ordersNumber": "30",
+    "ordersNumber": "1",
     "services": ["carpetcleaning", "furniturecleaning"],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/hamburger-solid.svg",
@@ -74,7 +74,7 @@
     "rating": "3",
     "ordersNumber": "10",
     "services": ["repaircleaning", "industrialcleaning"],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/hippo-solid.svg",
@@ -88,7 +88,7 @@
       "furniturecleaning",
       "carpetcleaning"
     ],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/horse-solid.svg",
@@ -97,7 +97,7 @@
     "rating": "4",
     "ordersNumber": "66",
     "services": ["standardcleaning", "poolcleaning"],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/home-solid.svg",
@@ -106,7 +106,7 @@
     "rating": "5",
     "ordersNumber": "85",
     "services": ["repaircleaning", "generalcleaning"],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/globe-americas-solid.svg",
@@ -115,7 +115,7 @@
     "rating": "4",
     "ordersNumber": "20",
     "services": ["standardcleaning", "generalcleaning", "poolcleaning"],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/dog-solid.svg",
@@ -129,7 +129,7 @@
       "repaircleaning",
       "officecleaning"
     ],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/crow-solid.svg",
@@ -143,7 +143,7 @@
       "carpetcleaning",
       "furniturecleaning"
     ],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/bread-slice-solid.svg",
@@ -158,16 +158,16 @@
       "furniturecleaning",
       "poolcleaning"
     ],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/city-solid.svg",
     "name": "City Cleaning",
     "address": "10 Downing Street, London",
     "rating": "4",
-    "ordersNumber": "30",
+    "ordersNumber": "1",
     "services": ["repaircleaning", "officecleaning", "industrialcleaning"],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/birthday-cake-solid.svg",
@@ -185,7 +185,7 @@
       "industrialcleaning",
       "poolcleaning"
     ],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/baseball-ball-solid.svg",
@@ -203,7 +203,7 @@
       "industrialcleaning",
       "poolcleaning"
     ],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/box-open-solid.svg",
@@ -212,7 +212,7 @@
     "rating": "5",
     "ordersNumber": "60",
     "services": ["carpetcleaning", "furniturecleaning"],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/bread-slice-solid.svg",
@@ -221,7 +221,7 @@
     "rating": "3",
     "ordersNumber": "70",
     "services": ["officecleaning", "standardcleaning"],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/cogs-solid.svg",
@@ -230,16 +230,16 @@
     "rating": "4",
     "ordersNumber": "80",
     "services": ["standardcleaning", "generalcleaning"],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/dice-two-solid.svg",
     "name": "Residential Cleaning Service",
     "address": "42 Wallaby Way, Sydney",
     "rating": "3",
-    "ordersNumber": "30",
+    "ordersNumber": "1",
     "services": ["officecleaning"],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/cookie-bite-solid.svg",
@@ -248,7 +248,7 @@
     "rating": "4",
     "ordersNumber": "90",
     "services": ["carpetcleaning", "furniturecleaning", "poolcleaning"],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/drumstick-bite-solid.svg",
@@ -257,7 +257,7 @@
     "rating": "5",
     "ordersNumber": "35",
     "services": ["repaircleaning", "industrialcleaning", "poolcleaning"],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   },
   {
     "logo": "./img/logo/fish-solid.svg",
@@ -266,6 +266,6 @@
     "rating": "4",
     "ordersNumber": "40",
     "services": ["repaircleaning", "industrialcleaning", "poolcleaning"],
-    "reviewsNumber": "25"
+    "reviewsNumber": "1"
   }
 ]
