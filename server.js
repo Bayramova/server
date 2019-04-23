@@ -16,7 +16,7 @@ const socketService = require("./services/socket");
 
 io.on("connection", socket => {
   console.log("Socket connection started!");
-  socketService(socket);
+  socketService(socket, io);
 });
 
 server.listen(5000, () => console.log("App is listening on port 5000!"));

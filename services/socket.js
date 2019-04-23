@@ -2,17 +2,19 @@
 /* eslint-disable no-unused-vars */
 const { Order } = require("../models/order");
 const Company = require("../models/company");
+const { User } = require("../models/user");
 
-module.exports = socket => {
+let store = {};
+module.exports = (socket, io) => {
   socket.on("disconnect", () => {
     console.log(`Socket connection has disconnected!`);
   });
 
-  socket.on("join", companyId => {
-    socket.join(companyId);
+  socket.on("userId", id => {
+    store = { ...store, ...{ [id]: socket.id } };
   });
 
-  socket.on("new_order", async data => {
+  socket.on("new order", async data => {
     try {
       const newOrder = await Order.create({
         address: data.address,
@@ -39,13 +41,20 @@ module.exports = socket => {
         if (company) {
           company.ordersNumber += 1;
           company.save();
-          socket.broadcast.emit("show_notification");
+          const user = await User.findOne({
+            where: {
+              company_id: newOrder.company_id
+            }
+          });
+          if (user) {
+            const companyId = store[user.id];
+            io.to(companyId).emit("show notification");
+          }
         }
       }
     } catch (error) {
       console.error(error);
-      socket.emit("error");
+      socket.emit("error", error);
     }
-    // socket.broadcast.to(newOrder.company_id).emit("show_notification");
   });
 };
