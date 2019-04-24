@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const passport = require("passport");
 const io = require("socket.io")(server);
+const path = require("path");
 const companies = require("./routes/companies");
 const services = require("./routes/services");
 const users = require("./routes/users");
@@ -25,6 +26,7 @@ app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "client/build")));
 
 app.use(morgan("dev"));
 

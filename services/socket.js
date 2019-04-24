@@ -4,14 +4,13 @@ const { Order } = require("../models/order");
 const Company = require("../models/company");
 const { User } = require("../models/user");
 
-let store = {};
 module.exports = (socket, io) => {
   socket.on("disconnect", () => {
     console.log(`Socket connection has disconnected!`);
   });
 
   socket.on("userId", id => {
-    store = { ...store, ...{ [id]: socket.id } };
+    socket.join(id);
   });
 
   socket.on("new order", async data => {
@@ -47,8 +46,7 @@ module.exports = (socket, io) => {
             }
           });
           if (user) {
-            const companyId = store[user.id];
-            io.to(companyId).emit("show notification");
+            io.sockets.in(user.id).emit("show notification");
           }
         }
       }
