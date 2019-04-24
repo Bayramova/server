@@ -4,6 +4,7 @@
 "use strict";
 
 const { User } = require("../models/user");
+const Client = require("../models/client");
 const Company = require("../models/company");
 const { Feedback, Order } = require("../models/order");
 
@@ -18,37 +19,32 @@ const leaveFeedback = async (id, data, res) => {
       const order = await Order.findOne({
         where: {
           id: newFeedback.order_id
-        }
+        },
+        include: [
+          { model: Company },
+          {
+            model: Client,
+            include: [
+              {
+                model: User
+              }
+            ]
+          }
+        ]
       });
       if (order) {
-        const client = await User.findOne({
-          where: {
-            client_id: order.client_id
-          }
-        });
-        if (client) {
-          if (client.id !== id) {
-            return res.status(403).json({
-              message: "Ooops. You don't have rights to visit this page."
-            });
-          } else {
-            const company = await Company.findOne({
-              where: {
-                id: order.company_id
-              }
-            });
-            if (company) {
-              if (company.rating === null) {
-                company.rating = newFeedback.rate;
-              } else {
-                company.rating = (company.rating + newFeedback.rate) / 2;
-              }
-              company.save();
-              order.feedbackLeft = true;
-              order.save();
-              return newFeedback;
-            }
-          }
+        if (order.client.user.id !== id) {
+          return res.status(403).json({
+            message: "Ooops. You don't have rights to visit this page."
+          });
+        } else {
+          const { company } = order;
+          company.reviewsNumber += 1;
+          company.rating += newFeedback.rate;
+          company.save();
+          order.feedbackLeft = true;
+          order.save();
+          return newFeedback;
         }
       }
     }
@@ -60,23 +56,23 @@ const leaveFeedback = async (id, data, res) => {
 
 const getFeedbacks = async id => {
   try {
-    const company = await Company.findOne({
-      where: {
-        id
-      }
-    });
-    if (company) {
-      const feedbacks = await Feedback.findAll({
-        include: [
-          {
-            model: Order,
-            where: {
-              company_id: company.id
+    const feedbacks = await Feedback.findAll({
+      include: [
+        {
+          model: Order,
+          include: [
+            {
+              model: Company,
+              where: {
+                id
+              }
             }
-          }
-        ]
-      });
-      return feedbacks;
+          ]
+        }
+      ]
+    });
+    if (feedbacks) {
+      return feedbacks.filter(feedback => feedback.order);
     }
   } catch (err) {
     console.log(`Error: ${err}`);

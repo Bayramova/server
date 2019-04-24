@@ -3,9 +3,9 @@
 
 "use strict";
 
-const { User } = require("../models/user");
-const { CLIENT } = require("../models/user");
+const { User, CLIENT } = require("../models/user");
 const Company = require("../models/company");
+const Client = require("../models/client");
 const { Order, NEW, CONFIRMED, CANCELLED, DONE } = require("../models/order");
 
 function switchResult(result) {
@@ -32,6 +32,7 @@ const makeOrder = async data => {
       cleaningFrequency: data.cleaningFrequency,
       prefix: data.prefix,
       phone: data.phone,
+      name: data.name,
       cost: data.cost,
       client_id: data.clientId,
       company_id: data.companyId
@@ -62,20 +63,23 @@ const getOrders = async id => {
       }
     });
     if (user) {
-      if (user.role === CLIENT) {
-        const orders = await Order.findAll({
-          where: {
-            client_id: user.client_id
-          }
-        });
+      const orders =
+        user.role === CLIENT
+          ? await Order.findAll({
+              where: {
+                client_id: user.client_id
+              },
+              include: [Company]
+            })
+          : await Order.findAll({
+              where: {
+                company_id: user.company_id
+              },
+              include: [Company]
+            });
+      if (orders) {
         return orders;
       }
-      const orders = await Order.findAll({
-        where: {
-          company_id: user.company_id
-        }
-      });
-      return orders;
     }
   } catch (err) {
     console.log(`Error: ${err}`);
@@ -88,41 +92,40 @@ const cancelOrder = async (params, id, res) => {
     const order = await Order.findOne({
       where: {
         id: params.orderId
-      }
+      },
+      include: [
+        {
+          model: Company,
+          include: [
+            {
+              model: User
+            }
+          ]
+        },
+        {
+          model: Client,
+          include: [
+            {
+              model: User
+            }
+          ]
+        }
+      ]
     });
     if (order) {
-      const client = await User.findOne({
-        where: {
-          client_id: order.client_id
-        }
-      });
-      const company = await User.findOne({
-        where: {
-          company_id: order.company_id
-        }
-      });
-      if (client && company) {
-        if (client.id !== id && company.id !== id) {
-          return res.status(403).json({
-            message: "Ooops. You don't have rights to visit this page."
-          });
-        } else {
-          order.status = CANCELLED;
-          const cancelledOrder = await order.save();
-          if (cancelledOrder) {
-            const cancelled = await Company.findOne({
-              where: {
-                id: cancelledOrder.company_id
-              }
-            });
-            if (cancelled) {
-              cancelled.ordersNumber -= 1;
-              cancelled.save();
-              return {
-                message: "Order cancelled."
-              };
-            }
-          }
+      if (order.client.user.id !== id && order.company.user.id !== id) {
+        return res.status(403).json({
+          message: "Ooops. You don't have rights to visit this page."
+        });
+      } else {
+        order.status = CANCELLED;
+        const cancelledOrder = await order.save();
+        if (cancelledOrder) {
+          cancelledOrder.company.ordersNumber -= 1;
+          cancelledOrder.company.save();
+          return {
+            message: "Order cancelled."
+          };
         }
       }
     }
@@ -137,27 +140,30 @@ const changeOrderStatus = async (params, id, res) => {
     const order = await Order.findOne({
       where: {
         id: params.orderId
-      }
+      },
+      include: [
+        {
+          model: Company,
+          include: [
+            {
+              model: User
+            }
+          ]
+        }
+      ]
     });
     if (order) {
-      const company = await User.findOne({
-        where: {
-          company_id: order.company_id
-        }
-      });
-      if (company) {
-        if (company.id !== id) {
-          return res.status(403).json({
-            message: "Ooops. You don't have rights to visit this page."
-          });
-        } else {
-          order.status = switchResult(order.status);
-          const updatedOrderStatus = await order.save();
-          if (updatedOrderStatus) {
-            return {
-              message: "Order status updated."
-            };
-          }
+      if (order.company.user.id !== id) {
+        return res.status(403).json({
+          message: "Ooops. You don't have rights to visit this page."
+        });
+      } else {
+        order.status = switchResult(order.status);
+        const updatedOrderStatus = await order.save();
+        if (updatedOrderStatus) {
+          return {
+            message: "Order status updated."
+          };
         }
       }
     }
