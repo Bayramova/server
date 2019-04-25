@@ -1,16 +1,19 @@
 "use strict";
 
 const express = require("express");
+
+const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const passport = require("passport");
+const server = require("http").Server(app);
 const companies = require("./routes/companies");
 const services = require("./routes/services");
-const clients = require("./routes/clients");
 const users = require("./routes/users");
 
-const app = express();
+server.listen(5000, () => console.log("App is listening on port 5000!"));
+
 app.use(cors());
 
 app.use(bodyParser.json());
@@ -24,6 +27,3 @@ require("./config/passport")(passport);
 app.use("/api", users);
 app.use("/api", companies);
 app.use("/api", services);
-app.use("/api", clients);
-
-app.listen(5000, () => console.log("App is listening on port 5000!"));
