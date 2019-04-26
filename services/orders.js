@@ -46,7 +46,16 @@ const makeOrder = async data => {
       if (company) {
         company.ordersNumber += 1;
         company.save();
-        return newOrder;
+        if (newOrder) {
+          const user = await User.findOne({
+            where: {
+              company_id: newOrder.company_id
+            }
+          });
+          if (user) {
+            return user;
+          }
+        }
       }
     }
   } catch (error) {

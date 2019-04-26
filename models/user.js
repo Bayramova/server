@@ -9,26 +9,30 @@ const CLIENT = "CLIENT";
 const COMPANY = "COMPANY";
 const ADMIN = "ADMIN";
 
-const User = db.sequelize.define("user", {
-  id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
+const User = db.sequelize.define(
+  "user",
+  {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    role: {
+      type: Sequelize.ENUM(CLIENT, COMPANY, ADMIN),
+      defaultValue: CLIENT
+    },
+    email: {
+      type: Sequelize.STRING,
+      unique: true,
+      allowNull: false
+    },
+    password: {
+      type: Sequelize.STRING,
+      allowNull: false
+    }
   },
-  role: {
-    type: Sequelize.ENUM(CLIENT, COMPANY, ADMIN),
-    defaultValue: CLIENT
-  },
-  email: {
-    type: Sequelize.STRING,
-    unique: true,
-    allowNull: false
-  },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false
-  }
-});
+  { timestamps: false }
+);
 
 Client.hasOne(User, {
   foreignKey: "client_id",

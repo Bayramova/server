@@ -1,21 +1,24 @@
 "use strict";
 
 const Sequelize = require("sequelize");
-// const { User } = require("./user");
 const db = require("../config/database");
 
-const Client = db.sequelize.define("client", {
-  id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
+const Client = db.sequelize.define(
+  "client",
+  {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    name: {
+      type: Sequelize.STRING
+    },
+    address: {
+      type: Sequelize.STRING
+    }
   },
-  name: {
-    type: Sequelize.STRING
-  },
-  address: {
-    type: Sequelize.STRING
-  }
-});
+  { timestamps: false }
+);
 
 module.exports = Client;
