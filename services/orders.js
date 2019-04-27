@@ -3,6 +3,7 @@
 
 "use strict";
 
+const jwtDecode = require("jwt-decode");
 const { User, CLIENT } = require("../models/user");
 const Company = require("../models/company");
 const Client = require("../models/client");
@@ -21,6 +22,20 @@ function switchResult(result) {
 
 const makeOrder = async data => {
   try {
+    if (data.token) {
+      const user = await User.findOne({
+        where: {
+          client_id: data.clientId
+        }
+      });
+      if (user) {
+        if (jwtDecode(data.isAuthorized).id !== user.id) {
+          return {
+            message: "Ooops. You don't have rights to visit this page."
+          };
+        }
+      }
+    }
     const newOrder = await Order.create({
       address: data.address,
       service: data.service,
@@ -60,7 +75,7 @@ const makeOrder = async data => {
     }
   } catch (error) {
     console.error(error);
-    return { success: false, message: "Order failed." };
+    return { message: "Order failed." };
   }
 };
 
