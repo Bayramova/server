@@ -19,8 +19,7 @@ const sequelize = new Sequelize(
     },
     define: {
       sync: true,
-      forceSync: false,
-      timestamps: false
+      forceSync: false
     }
   }
 );

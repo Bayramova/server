@@ -9,7 +9,6 @@ const checkAuth = require("../middleware/checkAuth");
 const { signUp, signIn, getUserFromToken } = require("../services/auth");
 const { getUserData, editUserData } = require("../services/user");
 const {
-  makeOrder,
   getOrders,
   cancelOrder,
   changeOrderStatus
@@ -38,11 +37,6 @@ router.get("/user/:id", checkAuth, async (req, res) => {
 
 router.put("/user/:id/edit", checkAuth, async (req, res) => {
   const response = await editUserData(req.params.id, req.body, res);
-  res.json(response);
-});
-
-router.post("/make_order", async (req, res) => {
-  const response = await makeOrder(req.body);
   res.json(response);
 });
 
