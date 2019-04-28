@@ -11,7 +11,7 @@ router.get("/services", async (req, res) => {
     res.json(services);
   } catch (err) {
     res.status(500).json({
-      message: "!!!!!!!!!!!!!!!!!!!!!!!!"
+      message: "Something went wrong."
     });
     console.log(`Error: ${err}`);
   }
