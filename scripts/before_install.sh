@@ -13,8 +13,7 @@ sudo n stable
 sudo apt-get install nginx git -y
 sudo apt-get install -y build-essential openssl libssl-dev pkg-config
 cd /etc/nginx/sites-available
-sudo vim server
-vim -c "server {
+echo "server {
     listen 80;
     location / {
         proxy_pass http://10.0.0.232:5000;
@@ -24,8 +23,10 @@ vim -c "server {
         proxy_set_header Host $host;
         proxy_cache_bypass $http_upgrade;
     }
-}" -c "wq"
+}" > server
 sudo rm default
+sudo ln -s /etc/nginx/sites-available/server /etc/nginx/sites-enabled/server
+sudo rm /etc/nginx/sites-enabled/default
 
 # Install pm2
 sudo npm install pm2 -g
