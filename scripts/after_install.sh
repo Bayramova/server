@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd /home/ubuntu/nodejs
+cd /home/ubuntu/server
 sudo npm install --unsafe-perm=true
