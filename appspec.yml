@@ -13,6 +13,3 @@ hooks:
   ApplicationStart:
     - location: scripts/application_start.sh
       runas: ubuntu
-  ApplicationStop:
-    - location: scripts/application_stop.sh
-      runas: ubuntu
