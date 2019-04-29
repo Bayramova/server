@@ -31,4 +31,5 @@ sudo rm /etc/nginx/sites-enabled/default
 
 # Install pm2
 sudo npm install pm2 -g
+pm2 update
 
