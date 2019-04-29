@@ -3,7 +3,7 @@
 # Install node.js
 sudo apt-get update
 sudo apt-get install -y build-essential openssl libssl-dev pkg-config
-sudo apt-get install -y nodejs nodejs-legacy 
+sudo apt-get install -y nodejs  
 sudo apt-get install npm -y
 sudo npm cache clean -f
 sudo npm install -g n
@@ -13,6 +13,7 @@ sudo n stable
 sudo apt-get install nginx git -y
 sudo apt-get install -y build-essential openssl libssl-dev pkg-config
 cd /etc/nginx/sites-available
+sudo vim server
 echo "server {
     listen 80;
     location / {
@@ -30,5 +31,4 @@ sudo rm /etc/nginx/sites-enabled/default
 
 # Install pm2
 sudo npm install pm2 -g
-pm2 update
 
