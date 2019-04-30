@@ -1,8 +1,8 @@
 version: 0.2
 phases:
-  pre_build:
+  install:
     commands:
-      - npm install
+       - npm install 
 artifacts:
   files:
-    - '**/*'
+     - '**/*' #copy all build files to S3 location
