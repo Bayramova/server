@@ -1,6 +1,9 @@
 version: 0.0
-os: linux 
+os: linux
 files:
-  - source: /server.js
-    destination: /var/www/server
-    overwrite: true
+  - source: /
+    destination: /home/ubuntu/server
+hooks:
+  ApplicationStart:
+    - location: scripts/application_start.sh
+      runas: ubuntu
