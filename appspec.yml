@@ -4,12 +4,6 @@ files:
   - source: /
     destination: /home/ubuntu/server
 hooks:
-  BeforeInstall:
-    - location: scripts/before_install.sh
-      runas: ubuntu
-  AfterInstall:
-    - location: scripts/after_install.sh
-      runas: ubuntu
   ApplicationStart:
     - location: scripts/application_start.sh
       runas: ubuntu
