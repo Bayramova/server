@@ -3,7 +3,6 @@
 
 "use strict";
 
-const jwtDecode = require("jwt-decode");
 const { User, CLIENT } = require("../models/user");
 const Company = require("../models/company");
 const Client = require("../models/client");
@@ -20,24 +19,23 @@ function switchResult(result) {
   }
 }
 
-const makeOrder = async data => {
+const makeOrder = async (data, id) => {
   try {
-    // TODO логика проверки токена не относиться к созданию заказа, это отдельная ф-ция. Или можно заюзать middleware https://github.com/erreina/passport-jwt.socketio
-    if (data.token) {
+    if (id) {
       const user = await User.findOne({
         where: {
           client_id: data.clientId
         }
       });
       if (user) {
-        // TODO это проверка просто расшифрует payload и сравнит id. А нам надо сравнить подписи jwt.verify
-        if (jwtDecode(data.isAuthorized).id !== user.id) {
+        if (id !== user.id) {
           return {
             message: "Ooops. You don't have rights to visit this page."
           };
         }
       }
     }
+
     const newOrder = await Order.create({
       address: data.address,
       service: data.service,
@@ -55,26 +53,16 @@ const makeOrder = async data => {
       company_id: data.companyId
     });
     if (newOrder) {
-      // TODO можно ли юзера достать вместе с компанией, чтобы не делать доп запрос?
       const company = await Company.findOne({
         where: {
           id: newOrder.company_id
-        }
+        },
+        include: [User]
       });
       if (company) {
         company.ordersNumber += 1;
         company.save();
-        // TODO эта проверка уже есть на 56 строчке
-        if (newOrder) {
-          const user = await User.findOne({
-            where: {
-              company_id: newOrder.company_id
-            }
-          });
-          if (user) {
-            return user;
-          }
-        }
+        return company.user;
       }
     }
   } catch (error) {
