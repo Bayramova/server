@@ -33,6 +33,8 @@ app.use(morgan("dev"));
 app.use(passport.initialize());
 require("./config/passport")(passport);
 
+app.get("/api/hello", (req, res) => res.send("Hello World!"));
+
 app.use("/api", users);
 app.use("/api", companies);
 app.use("/api", services);
