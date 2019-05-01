@@ -2,7 +2,7 @@ version: 0.2
 phases:
   install:
     commands:
-       - npm install
+       - sudo npm install
 artifacts:
   files:
      - '**/*' #copy all build files to S3 location
