@@ -13,7 +13,8 @@ const Company = db.sequelize.define(
     },
     logo: {
       type: Sequelize.STRING,
-      defaultValue: "./img/logo/question-solid.svg"
+      defaultValue:
+        "https://s3.us-east-2.amazonaws.com/cleaning-services-images-storage/square.jpg"
     },
     name: {
       type: Sequelize.STRING
