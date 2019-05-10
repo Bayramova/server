@@ -6,7 +6,12 @@ const express = require("express");
 
 const router = express.Router();
 const checkAuth = require("../middleware/checkAuth");
-const { signUp, signIn, getUserFromToken } = require("../services/auth");
+const {
+  signUp,
+  verifyEmail,
+  signIn,
+  getUserFromToken
+} = require("../services/auth");
 const { getUserData, editUserData } = require("../services/user");
 const {
   getOrders,
@@ -17,6 +22,11 @@ const { leaveFeedback, getFeedbacks } = require("../services/feedbacks");
 
 router.post("/signup", async (req, res) => {
   const response = await signUp(req.body, res);
+  res.json(response);
+});
+
+router.post("/verifyEmail", async (req, res) => {
+  const response = await verifyEmail(req.body, res);
   res.json(response);
 });
 
