@@ -25,8 +25,8 @@ router.post("/signup", async (req, res) => {
   res.json(response);
 });
 
-router.post("/verifyEmail", async (req, res) => {
-  const response = await verifyEmail(req.body, res);
+router.get("/verifyEmail/:verificationToken", async (req, res) => {
+  const response = await verifyEmail(req.params.verificationToken, res);
   res.json(response);
 });
 

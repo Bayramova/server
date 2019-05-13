@@ -4,12 +4,14 @@
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { User } = require("../models/user");
+const crypto = require("crypto-random-string");
+const { User, VerificationToken } = require("../models/user");
 const { CLIENT } = require("../models/user");
 const Client = require("../models/client");
 const Company = require("../models/company");
 const jwtSecret = require("../config/keys");
-const fileUpload = require("./file-upload");
+const fileUpload = require("./fileUpload");
+const sendMail = require("./sendMail");
 
 const signUp = async (data, res) => {
   try {
@@ -36,7 +38,18 @@ const signUp = async (data, res) => {
           client_id: newClient.id
         });
         if (newUser) {
-          return newClient;
+          const verificationToken = await VerificationToken.create({
+            user_id: newUser.id,
+            token: crypto({ length: 10 })
+          });
+          if (verificationToken) {
+            sendMail(newUser.email, verificationToken.token);
+            return {
+              message: "Email sent, please check your inbox to confirm",
+              user: newUser,
+              verificationToken: verificationToken.token
+            };
+          }
         }
       }
     } else {
@@ -63,8 +76,42 @@ const signUp = async (data, res) => {
       }
     }
   } catch (error) {
+    console.log(error);
+    return res.json({ message: error.message });
+  }
+};
+
+const verifyEmail = async (verificationToken, res) => {
+  try {
+    const verificatioToken = await VerificationToken.findOne({
+      where: { token: verificationToken },
+      include: [User]
+    });
+    if (verificatioToken) {
+      const { user } = verificatioToken.dataValues;
+      if (user.isEmailVerified) {
+        return res.status(202).json("Email already verified");
+      }
+      const updatedUser = await user.update({ isEmailVerified: true });
+      if (updatedUser) {
+        const payload = {
+          id: updatedUser.id,
+          exp: Math.floor(Date.now() / 1000) + 60 * 60
+        };
+        const token = jwt.sign(payload, jwtSecret.secret);
+
+        const { id, email, role } = updatedUser.dataValues;
+
+        return {
+          success: true,
+          token: `Bearer ${token}`,
+          user: { id, email, role }
+        };
+      }
+    }
+  } catch (error) {
     console.error(error);
-    return { success: false, message: "Registration failed." };
+    return { success: false, message: "Verification failed." };
   }
 };
 
@@ -122,4 +169,4 @@ const getUserFromToken = async data => {
   }
 };
 
-module.exports = { signUp, signIn, getUserFromToken };
+module.exports = { signUp, verifyEmail, signIn, getUserFromToken };

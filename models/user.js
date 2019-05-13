@@ -33,16 +33,42 @@ const User = db.sequelize.define(
     isEmailVerified: {
       type: Sequelize.BOOLEAN,
       defaultValue: false
-    },
-    verifyEmailToken: {
-      type: Sequelize.STRING
-    },
-    verifyEmailTokenExpires: {
-      type: Sequelize.DATE
     }
   },
   { timestamps: false }
 );
+
+const VerificationToken = db.sequelize.define(
+  "verificationToken",
+  {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    token: {
+      type: Sequelize.STRING
+    }
+  },
+  { timestamps: true },
+  {
+    instanceMethods: {
+      deleteExpiredToken: () => {
+        db.sequelize.query(`
+        CREATE EVENT expireToken
+        ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL  1 DAY 
+        DO
+        DELETE FROM verificationTokens WHERE createdAt < DATE_SUB(NOW(), INTERVAL 1 DAY);
+        `);
+      }
+    }
+  }
+);
+
+User.hasOne(VerificationToken, {
+  foreignKey: "user_id",
+  targetKey: "id"
+});
 
 Client.hasOne(User, {
   foreignKey: "client_id",
@@ -58,4 +84,4 @@ Company.hasOne(User, {
   defaultValue: null
 });
 
-module.exports = { User, CLIENT, COMPANY };
+module.exports = { User, VerificationToken, CLIENT, COMPANY };
