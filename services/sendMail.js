@@ -19,9 +19,8 @@ module.exports = async (to, token) => {
       from: process.env.MAIL_USER,
       to,
       subject: "Verify Your Email",
-      text: `Click on this link to verify your email ${
-        process.env.HOST
-      }/verification/${token}`
+      html: `Please click on the link to verify your email.
+      <br><a href=${process.env.HOST}/verifyEmail/${token}>Click</a>`
     });
   } catch (err) {
     console.log(err);

@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable consistent-return */
 
 "use strict";
@@ -71,7 +72,18 @@ const signUp = async (data, res) => {
           company_id: newCompany.id
         });
         if (newUser) {
-          return newCompany;
+          const verificationToken = await VerificationToken.create({
+            user_id: newUser.id,
+            token: crypto({ length: 10 })
+          });
+          if (verificationToken) {
+            sendMail(newUser.email, verificationToken.token);
+            return {
+              message: "Email sent, please check your inbox to confirm",
+              user: newUser,
+              verificationToken: verificationToken.token
+            };
+          }
         }
       }
     }
@@ -83,35 +95,43 @@ const signUp = async (data, res) => {
 
 const verifyEmail = async (verificationToken, res) => {
   try {
-    const verificatioToken = await VerificationToken.findOne({
+    const token = await VerificationToken.findOne({
       where: { token: verificationToken },
       include: [User]
     });
-    if (verificatioToken) {
-      const { user } = verificatioToken.dataValues;
-      if (user.isEmailVerified) {
-        return res.status(202).json("Email already verified");
-      }
-      const updatedUser = await user.update({ isEmailVerified: true });
-      if (updatedUser) {
-        const payload = {
-          id: updatedUser.id,
-          exp: Math.floor(Date.now() / 1000) + 60 * 60
-        };
-        const token = jwt.sign(payload, jwtSecret.secret);
+    if (token) {
+      const { user } = token.dataValues;
+      if (user) {
+        if (user.isEmailVerified) {
+          return res.status(401).json({
+            error: "Email already verified, please sign in."
+          });
+        }
+        const updatedUser = await user.update({ isEmailVerified: true });
+        if (updatedUser) {
+          const payload = {
+            id: updatedUser.id,
+            exp: Math.floor(Date.now() / 1000) + 60 * 60
+          };
+          const token = jwt.sign(payload, jwtSecret.secret);
 
-        const { id, email, role } = updatedUser.dataValues;
+          const { id, email, role } = updatedUser.dataValues;
 
-        return {
-          success: true,
-          token: `Bearer ${token}`,
-          user: { id, email, role }
-        };
+          return {
+            success: true,
+            token: `Bearer ${token}`,
+            user: { id, email, role }
+          };
+        }
+      } else {
+        res.status(401).json({
+          error: "Verification token is expired. Please push the resend button."
+        });
       }
     }
   } catch (error) {
     console.error(error);
-    return { success: false, message: "Verification failed." };
+    return { error: "Verification failed." };
   }
 };
 
@@ -124,6 +144,12 @@ const signIn = async (data, res) => {
     });
     if (!user) {
       return res.status(400).json({ emailincorrect: "No such user!" });
+    }
+
+    if (!user.isEmailVerified) {
+      return res
+        .status(400)
+        .json({ emailincorrect: "Please confirm your email to login!" });
     }
 
     const match = await bcrypt.compare(data.password, user.password);

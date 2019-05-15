@@ -65,7 +65,7 @@ const VerificationToken = db.sequelize.define(
   }
 );
 
-User.hasOne(VerificationToken, {
+VerificationToken.belongsTo(User, {
   foreignKey: "user_id",
   targetKey: "id"
 });
