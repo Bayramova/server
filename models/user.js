@@ -50,21 +50,8 @@ const VerificationToken = db.sequelize.define(
       type: Sequelize.STRING
     }
   },
-  { timestamps: true },
-  {
-    instanceMethods: {
-      deleteExpiredToken: () => {
-        db.sequelize.query(`
-        CREATE EVENT expireToken
-        ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL  1 DAY 
-        DO
-        DELETE FROM verificationTokens WHERE createdAt < DATE_SUB(NOW(), INTERVAL 1 DAY);
-        `);
-      }
-    }
-  }
+  { timestamps: true }
 );
-
 VerificationToken.belongsTo(User, {
   foreignKey: "user_id",
   targetKey: "id"

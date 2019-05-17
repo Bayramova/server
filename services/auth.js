@@ -6,6 +6,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto-random-string");
+const db = require("../config/database");
 const { User, VerificationToken } = require("../models/user");
 const { CLIENT } = require("../models/user");
 const Client = require("../models/client");
@@ -95,11 +96,29 @@ const signUp = async (data, res) => {
 
 const verifyEmail = async (verificationToken, res) => {
   try {
+    // const expiredTokens = await VerificationToken.destroy({
+    //   where: {
+    //     createdAt: {
+    //       lt: db.sequelize.literal("now() - '1 minute'::interval")
+    //     }
+    //   }
+    // });
+    // if (expiredTokens) {
     const token = await VerificationToken.findOne({
       where: { token: verificationToken },
       include: [User]
     });
     if (token) {
+      // console.log(
+      //   "1111111111111111111111111",
+      //   `${(Date.now() - token.createdAt) / 1000 / 60}minutes`
+      // );
+      if ((Date.now() - token.createdAt) / 1000 / 60 > 1) {
+        console.log("Expired !!!!!!!!!!!!!!!!!!!!!");
+        return res.status(401).json({
+          error: "Verification token is expired. Please push the resend button."
+        });
+      }
       const { user } = token.dataValues;
       if (user) {
         if (user.isEmailVerified) {
@@ -114,24 +133,49 @@ const verifyEmail = async (verificationToken, res) => {
             exp: Math.floor(Date.now() / 1000) + 60 * 60
           };
           const token = jwt.sign(payload, jwtSecret.secret);
-
           const { id, email, role } = updatedUser.dataValues;
-
           return {
             success: true,
             token: `Bearer ${token}`,
             user: { id, email, role }
           };
         }
-      } else {
-        res.status(401).json({
-          error: "Verification token is expired. Please push the resend button."
-        });
       }
+    } else {
+      console.log("Expired !!!!!!!!!!!!!!!!!!!!!");
+      res.status(401).json({
+        error: "Verification token is expired. Please push the resend button."
+      });
     }
   } catch (error) {
     console.error(error);
     return { error: "Verification failed." };
+  }
+};
+
+const resendEmail = async (data, res) => {
+  try {
+    const verificationToken = await VerificationToken.findOne({
+      include: [
+        {
+          model: User,
+          where: {
+            email: data.email
+          }
+        }
+      ]
+    });
+    if (verificationToken) {
+      sendMail(data.email, verificationToken.token);
+      return {
+        message: "Email resent, please check your inbox to confirm",
+        user: verificationToken.user,
+        verificationToken: verificationToken.token
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return res.json({ message: error.message });
   }
 };
 
@@ -176,6 +220,41 @@ const signIn = async (data, res) => {
   }
 };
 
+const resetPassword = async (data, res) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        email: data.email
+      }
+    });
+    if (!user) {
+      return res.status(400).json({ emailincorrect: "No such user!" });
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(data.password, salt);
+    user.password = hash;
+    user.isEmailVerified = false;
+    const updatedUser = await user.save();
+    if (updatedUser) {
+      const verificationToken = await VerificationToken.create({
+        user_id: user.id,
+        token: crypto({ length: 10 })
+      });
+      if (verificationToken) {
+        sendMail(user.email, verificationToken.token);
+        return {
+          message: "Email sent, please check your inbox to confirm",
+          user,
+          verificationToken: verificationToken.token
+        };
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    return res.json({ message: error.message });
+  }
+};
+
 const getUserFromToken = async data => {
   try {
     const user = await User.findOne({
@@ -195,4 +274,11 @@ const getUserFromToken = async data => {
   }
 };
 
-module.exports = { signUp, verifyEmail, signIn, getUserFromToken };
+module.exports = {
+  signUp,
+  verifyEmail,
+  resendEmail,
+  signIn,
+  resetPassword,
+  getUserFromToken
+};

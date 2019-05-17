@@ -8,8 +8,10 @@ const router = express.Router();
 const checkAuth = require("../middleware/checkAuth");
 const {
   signUp,
+  resendEmail,
   verifyEmail,
   signIn,
+  resetPassword,
   getUserFromToken
 } = require("../services/auth");
 const { getUserData, editUserData } = require("../services/user");
@@ -25,6 +27,11 @@ router.post("/signup", async (req, res) => {
   res.json(response);
 });
 
+router.post("/resend", async (req, res) => {
+  const response = await resendEmail(req.body, res);
+  res.json(response);
+});
+
 router.get("/verifyEmail/:verificationToken", async (req, res) => {
   const response = await verifyEmail(req.params.verificationToken, res);
   res.json(response);
@@ -32,6 +39,11 @@ router.get("/verifyEmail/:verificationToken", async (req, res) => {
 
 router.post("/signin", async (req, res) => {
   const response = await signIn(req.body, res);
+  res.json(response);
+});
+
+router.post("/reset", async (req, res) => {
+  const response = await resetPassword(req.body, res);
   res.json(response);
 });
 
