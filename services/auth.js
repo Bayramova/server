@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 /* eslint-disable no-shadow */
 /* eslint-disable consistent-return */
 
@@ -6,7 +7,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto-random-string");
-const db = require("../config/database");
 const { User, VerificationToken } = require("../models/user");
 const { CLIENT } = require("../models/user");
 const Client = require("../models/client");
@@ -90,33 +90,26 @@ const signUp = async (data, res) => {
     }
   } catch (error) {
     console.log(error);
-    return res.json({ message: error.message });
+    return res.json({ error: "Registration failed." });
   }
 };
 
 const verifyEmail = async (verificationToken, res) => {
   try {
-    // const expiredTokens = await VerificationToken.destroy({
-    //   where: {
-    //     createdAt: {
-    //       lt: db.sequelize.literal("now() - '1 minute'::interval")
-    //     }
-    //   }
-    // });
-    // if (expiredTokens) {
     const token = await VerificationToken.findOne({
       where: { token: verificationToken },
       include: [User]
     });
     if (token) {
-      // console.log(
-      //   "1111111111111111111111111",
-      //   `${(Date.now() - token.createdAt) / 1000 / 60}minutes`
-      // );
-      if ((Date.now() - token.createdAt) / 1000 / 60 > 1) {
-        console.log("Expired !!!!!!!!!!!!!!!!!!!!!");
+      if ((Date.now() - token.createdAt) / 1000 / 60 / 60 > 24) {
+        await VerificationToken.destroy({
+          where: {
+            token: token.token
+          }
+        });
         return res.status(401).json({
-          error: "Verification token is expired. Please push the resend button."
+          expiredError:
+            "Verification token is expired. Please click the resend button."
         });
       }
       const { user } = token.dataValues;
@@ -142,40 +135,41 @@ const verifyEmail = async (verificationToken, res) => {
         }
       }
     } else {
-      console.log("Expired !!!!!!!!!!!!!!!!!!!!!");
-      res.status(401).json({
-        error: "Verification token is expired. Please push the resend button."
+      return res.status(401).json({
+        expiredError:
+          "Verification time is expired. Please click the resend button."
       });
     }
   } catch (error) {
     console.error(error);
-    return { error: "Verification failed." };
+    return res.json({ error: "Verification failed." });
   }
 };
 
 const resendEmail = async (data, res) => {
   try {
-    const verificationToken = await VerificationToken.findOne({
-      include: [
-        {
-          model: User,
-          where: {
-            email: data.email
-          }
-        }
-      ]
+    const user = await User.findOne({
+      where: {
+        email: data.email
+      }
     });
-    if (verificationToken) {
-      sendMail(data.email, verificationToken.token);
-      return {
-        message: "Email resent, please check your inbox to confirm",
-        user: verificationToken.user,
-        verificationToken: verificationToken.token
-      };
+    if (user) {
+      const verificationToken = await VerificationToken.create({
+        user_id: user.id,
+        token: crypto({ length: 10 })
+      });
+      if (verificationToken) {
+        sendMail(user.email, verificationToken.token);
+        return {
+          message: "Email sent, please check your inbox to confirm",
+          user,
+          verificationToken: verificationToken.token
+        };
+      }
     }
   } catch (error) {
     console.log(error);
-    return res.json({ message: error.message });
+    return res.json({ error: "Something went wrong." });
   }
 };
 
@@ -216,7 +210,7 @@ const signIn = async (data, res) => {
     };
   } catch (error) {
     console.error(error);
-    return { success: false, message: "Authentication failed." };
+    return res.json({ error: "Athentication failed." });
   }
 };
 
@@ -251,11 +245,11 @@ const resetPassword = async (data, res) => {
     }
   } catch (error) {
     console.log(error);
-    return res.json({ message: error.message });
+    return res.json({ error: "Something went wrong." });
   }
 };
 
-const getUserFromToken = async data => {
+const getUserFromToken = async (data, res) => {
   try {
     const user = await User.findOne({
       where: {
@@ -263,14 +257,20 @@ const getUserFromToken = async data => {
       }
     });
     if (user) {
+      if (!user.isEmailVerified) {
+        return res
+          .status(400)
+          .json({ error: "Please confirm your email to login!" });
+      }
       const { id, email, role } = user.dataValues;
       return {
         user: { id, email, role }
       };
     }
+    return res.json({ error: "No such user." });
   } catch (err) {
     console.log(err);
-    return { success: false, message: "Authentication failed." };
+    return res.json({ error: "Athentication failed." });
   }
 };
 

@@ -48,7 +48,7 @@ router.post("/reset", async (req, res) => {
 });
 
 router.get("/user/from/token", checkAuth, async (req, res) => {
-  const response = await getUserFromToken(req.id);
+  const response = await getUserFromToken(req.id, res);
   res.json(response);
 });
 
