@@ -6,7 +6,14 @@ const express = require("express");
 
 const router = express.Router();
 const checkAuth = require("../middleware/checkAuth");
-const { signUp, signIn, getUserFromToken } = require("../services/auth");
+const {
+  signUp,
+  resendEmail,
+  verifyEmail,
+  signIn,
+  resetPassword,
+  getUserFromToken
+} = require("../services/auth");
 const { getUserData, editUserData } = require("../services/user");
 const {
   getOrders,
@@ -20,13 +27,28 @@ router.post("/signup", async (req, res) => {
   res.json(response);
 });
 
+router.post("/resend", async (req, res) => {
+  const response = await resendEmail(req.body, res);
+  res.json(response);
+});
+
+router.get("/verifyEmail/:verificationToken", async (req, res) => {
+  const response = await verifyEmail(req.params.verificationToken, res);
+  res.json(response);
+});
+
 router.post("/signin", async (req, res) => {
   const response = await signIn(req.body, res);
   res.json(response);
 });
 
+router.post("/reset", async (req, res) => {
+  const response = await resetPassword(req.body, res);
+  res.json(response);
+});
+
 router.get("/user/from/token", checkAuth, async (req, res) => {
-  const response = await getUserFromToken(req.id);
+  const response = await getUserFromToken(req.id, res);
   res.json(response);
 });
 

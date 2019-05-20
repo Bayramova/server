@@ -29,10 +29,33 @@ const User = db.sequelize.define(
     password: {
       type: Sequelize.STRING,
       allowNull: false
+    },
+    isEmailVerified: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
     }
   },
   { timestamps: false }
 );
+
+const VerificationToken = db.sequelize.define(
+  "verificationToken",
+  {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    token: {
+      type: Sequelize.STRING
+    }
+  },
+  { timestamps: true }
+);
+VerificationToken.belongsTo(User, {
+  foreignKey: "user_id",
+  targetKey: "id"
+});
 
 Client.hasOne(User, {
   foreignKey: "client_id",
@@ -48,4 +71,4 @@ Company.hasOne(User, {
   defaultValue: null
 });
 
-module.exports = { User, CLIENT, COMPANY };
+module.exports = { User, VerificationToken, CLIENT, COMPANY };
