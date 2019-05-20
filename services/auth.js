@@ -9,6 +9,7 @@ const { CLIENT } = require("../models/user");
 const Client = require("../models/client");
 const Company = require("../models/company");
 const jwtSecret = require("../config/keys");
+const fileUpload = require("./file-upload");
 
 const signUp = async (data, res) => {
   try {
@@ -20,40 +21,46 @@ const signUp = async (data, res) => {
     if (user) {
       return res.status(400).json({ email: "Email already exists!" });
     }
-
-    const newUser = User.build({
-      role: data.role,
-      name: data.name,
-      email: data.email,
-      password: data.password
-    });
-
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(data.password, salt);
     if (data.role === CLIENT) {
       const newClient = await Client.create({
         name: data.name,
         address: data.address
       });
       if (newClient) {
-        newUser.client_id = newClient.id;
+        const newUser = await User.create({
+          role: data.role,
+          email: data.email,
+          password: hash,
+          client_id: newClient.id
+        });
+        if (newUser) {
+          return newClient;
+        }
       }
     } else {
+      let logo;
+      if (data.logo) {
+        logo = await fileUpload(Date.now().toString(), data.logo, res);
+      }
       const newCompany = await Company.create({
-        logo: data.logo,
+        logo,
         name: data.name,
         address: data.address,
         services: data.services
       });
       if (newCompany) {
-        newUser.company_id = newCompany.id;
+        const newUser = await User.create({
+          role: data.role,
+          email: data.email,
+          password: hash,
+          company_id: newCompany.id
+        });
+        if (newUser) {
+          return newCompany;
+        }
       }
-    }
-
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(newUser.password, salt);
-    newUser.password = hash;
-    const registeredUser = newUser.save();
-    if (registeredUser) {
-      return registeredUser;
     }
   } catch (error) {
     console.error(error);
