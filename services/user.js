@@ -3,12 +3,10 @@
 
 "use strict";
 
-const crypto = require("crypto-random-string");
-const { User, VerificationToken } = require("../models/user");
+const { User } = require("../models/user");
 const { CLIENT } = require("../models/user");
 const Client = require("../models/client");
 const Company = require("../models/company");
-const sendMail = require("./sendMail");
 
 const getUserData = async id => {
   try {
@@ -61,16 +59,8 @@ const editUserData = async (id, data, res) => {
     });
     if (userToUpdate) {
       userToUpdate.email = data.email;
-      userToUpdate.isEmailVerified = false;
       const updatedUser = await userToUpdate.save();
       if (updatedUser) {
-        const verificationToken = await VerificationToken.create({
-          user_id: updatedUser.id,
-          token: crypto({ length: 10 })
-        });
-        if (verificationToken) {
-          sendMail(updatedUser.email, verificationToken.token);
-        }
         if (updatedUser.role === CLIENT) {
           const clientToUpdate = await Client.findOne({
             where: {
@@ -82,8 +72,7 @@ const editUserData = async (id, data, res) => {
             clientToUpdate.address = data.address;
             await clientToUpdate.save();
             return {
-              message: "Please check your inbox to confirm updating.",
-              verificationToken: verificationToken.token
+              user: updatedUser
             };
           }
         }
@@ -98,8 +87,7 @@ const editUserData = async (id, data, res) => {
           companyToUpdate.services = data.services;
           await companyToUpdate.save();
           return {
-            message: "Please check your inbox to confirm updating.",
-            verificationToken: verificationToken.token
+            user: updatedUser
           };
         }
       }
